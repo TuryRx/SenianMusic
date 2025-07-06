@@ -1,8 +1,15 @@
 package com.example.senianmusic.ui.login
-import androidx.appcompat.app.AppCompatActivity
-import com.example.senianmusic.data.local.SettingsRepository // Asegúrate de tener este import
-import com.example.senianmusic.databinding.ActivityLoginBinding // Y el de ViewBinding
 
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import com.example.senianmusic.MainActivity
+import com.example.senianmusic.data.local.SettingsRepository // Asegúrate de que esta clase exista
+import com.example.senianmusic.data.remote.RetrofitClient // Asegúrate de que esta clase exista
+import com.example.senianmusic.databinding.ActivityLoginBinding
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var settingsRepository: SettingsRepository
@@ -13,7 +20,9 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Estas dos clases DEBEN existir en tu proyecto para que esto compile:
         settingsRepository = SettingsRepository(applicationContext)
+        // RetrofitClient.initialize(...)
 
         binding.connectButton.setOnClickListener {
             val url = binding.urlEditText.text.toString().trim()
@@ -21,22 +30,18 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.passwordEditText.text.toString().trim()
 
             if (url.isNotEmpty() && user.isNotEmpty()) {
-                // --- AQUÍ OCURRE LA MAGIA ---
-
-                // 1. INICIALIZAMOS Retrofit con la URL que acaba de dar el usuario.
-                // Asegúrate de que la URL termine en "/"
                 val finalUrl = if (url.endsWith("/")) url else "$url/"
+
+                // Asegúrate de que RetrofitClient.initialize exista y funcione
                 RetrofitClient.initialize(finalUrl)
 
-                // 2. Guardamos la URL para no volver a pedirla.
                 lifecycleScope.launch {
                     settingsRepository.saveServerUrl(finalUrl)
-                    // También guardarías el usuario y contraseña/token aquí
+                    // TODO: Aquí también guardarías el usuario/token y harías la llamada de login
                 }
 
-                // 3. Vamos a la pantalla principal de la app.
                 startActivity(Intent(this, MainActivity::class.java))
-                finish() // Cierra la pantalla de login
+                finish()
             } else {
                 Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show()
             }

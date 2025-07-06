@@ -1,11 +1,11 @@
-package com.senian.senianmusic.ui.main
+package com.example.senianmusic.ui.main
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.senian.senianmusic.data.local.AppDatabase
-import com.senian.senianmusic.data.local.SettingsRepository
-import com.senian.senianmusic.data.repository.MusicRepository
+import com.example.senianmusic.data.local.AppDatabase
+import com.example.senianmusic.data.local.SettingsRepository
+import com.example.senianmusic.data.repository.MusicRepository
 
 // 1. La fábrica necesita el Context para poder crear las dependencias.
 class MainViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
@@ -24,7 +24,7 @@ class MainViewModelFactory(private val context: Context) : ViewModelProvider.Fac
             val settingsRepository = SettingsRepository(context.applicationContext)
 
             // b. Crea la instancia del MusicRepository con todo lo que necesita
-            val musicRepository = MusicRepository(songDao, settingsRepository, context.applicationContext)
+            val musicRepository = MusicRepository(songDao, settingsRepository)
 
             // c. Crea el MainViewModel y se lo pasa al sistema.
             // La supresión de advertencia es segura aquí porque ya hemos comprobado el tipo.
