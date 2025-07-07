@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="48dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:background="@color/default_background"> <!-- Usa un color de fondo apropiado para TV -->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Configurar Servidor Navidrome"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginBottom="24dp"/>
+
+    <EditText
+        android:id="@+id/et_server_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="URL del Servidor (ej. http://192.168.1.100:4533)"
+        android:inputType="textUri"
+        android:layout_marginBottom="16dp"
+        android:imeOptions="actionNext"/>
+
+    <EditText
+        android:id="@+id/et_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Usuario"
+        android:inputType="textPersonName"
+        android:layout_marginBottom="16dp"
+        android:imeOptions="actionNext"/>
+
+    <EditText
+        android:id="@+id/et_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Contraseña"
+        android:inputType="textPassword"
+        android:layout_marginBottom="24dp"
+        android:imeOptions="actionDone"/>
+
+    <Button
+        android:id="@+id/btn_connect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Conectar"/>
+
+</LinearLayout>

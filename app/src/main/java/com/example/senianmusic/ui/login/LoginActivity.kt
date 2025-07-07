@@ -2,12 +2,14 @@ package com.example.senianmusic.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log // <-- IMPORT AÑADIDO
+import android.view.View // <-- IMPORT AÑADIDO
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.senianmusic.MainActivity
-import com.example.senianmusic.data.local.SettingsRepository // Asegúrate de que esta clase exista
-import com.example.senianmusic.data.remote.RetrofitClient // Asegúrate de que esta clase exista
+import com.example.senianmusic.data.local.SettingsRepository
+import com.example.senianmusic.data.remote.RetrofitClient
 import com.example.senianmusic.databinding.ActivityLoginBinding
 import kotlinx.coroutines.launch
 
@@ -20,28 +22,47 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Estas dos clases DEBEN existir en tu proyecto para que esto compile:
         settingsRepository = SettingsRepository(applicationContext)
-        // RetrofitClient.initialize(...)
 
         binding.connectButton.setOnClickListener {
             val url = binding.urlEditText.text.toString().trim()
             val user = binding.userEditText.text.toString().trim()
             val password = binding.passwordEditText.text.toString().trim()
 
-            if (url.isNotEmpty() && user.isNotEmpty()) {
-                val finalUrl = if (url.endsWith("/")) url else "$url/"
+            if (url.isNotEmpty() && user.isNotEmpty() && password.isNotEmpty()) {
+                // Inicia feedback visual
+                binding.connectButton.isEnabled = false
+                binding.progressBar.visibility = View.VISIBLE
 
-                // Asegúrate de que RetrofitClient.initialize exista y funcione
+                val finalUrl = if (url.endsWith("/")) url else "$url/"
                 RetrofitClient.initialize(finalUrl)
 
                 lifecycleScope.launch {
-                    settingsRepository.saveServerUrl(finalUrl)
-                    // TODO: Aquí también guardarías el usuario/token y harías la llamada de login
-                }
+                    try {
+                        val fakeToken = "faketoken"
+                        val fakeSalt = "fakesalt"
+                        Log.d("LoginActivity", "Intentando hacer PING al servidor...")
+                        val response = RetrofitClient.getApiService().ping(user, fakeToken, fakeSalt)
 
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
+                        if (response.isSuccessful) {
+                            Log.d("LoginActivity", "Ping exitoso!")
+                            Toast.makeText(this@LoginActivity, "¡Conexión exitosa!", Toast.LENGTH_SHORT).show()
+                            settingsRepository.saveServerUrl(finalUrl)
+                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                            finish()
+                        } else {
+                            Log.e("LoginActivity", "Ping fallido! Código: ${response.code()}")
+                            Toast.makeText(this@LoginActivity, "Error del servidor: ${response.code()}", Toast.LENGTH_LONG).show()
+                        }
+                    } catch (e: Exception) {
+                        Log.e("LoginActivity", "Excepción al hacer ping", e) // Pasamos la excepción completa al log
+                        Toast.makeText(this@LoginActivity, "Error de conexión: ${e.message}", Toast.LENGTH_LONG).show()
+                    } finally {
+                        // Restaura la UI
+                        binding.connectButton.isEnabled = true
+                        binding.progressBar.visibility = View.GONE
+                    }
+                }
             } else {
                 Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show()
             }
