@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+
+    <!-- Un gris semitransparente. #33 es ~20% de opacidad. -->
+    <!-- #CCCCCC es un gris claro. Puedes ajustarlo a tu gusto. -->
+    <solid android:color="#33CCCCCC" />
+
+</shape>

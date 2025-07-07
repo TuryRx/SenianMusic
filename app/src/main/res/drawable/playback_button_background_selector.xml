@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- Estado: Cuando el botón está enfocado -->
+    <item android:state_focused="true"
+        android:drawable="@drawable/playback_button_background_focused" />
+        
+    <!-- Estado por defecto (cuando no está enfocado) -->
+    <item android:drawable="@drawable/playback_button_background_normal" />
+        
+</selector>

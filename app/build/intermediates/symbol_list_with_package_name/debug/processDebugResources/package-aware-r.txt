@@ -3657,6 +3657,7 @@ drawable exo_styled_controls_speed
 drawable exo_styled_controls_subtitle_off
 drawable exo_styled_controls_subtitle_on
 drawable exo_styled_controls_vr
+drawable focus_highlight
 drawable ic_arrow_back_black_24
 drawable ic_call_answer
 drawable ic_call_answer_low
@@ -3666,6 +3667,7 @@ drawable ic_call_decline
 drawable ic_call_decline_low
 drawable ic_clear_black_24
 drawable ic_clock_black_24dp
+drawable ic_forward_10
 drawable ic_keyboard_black_24dp
 drawable ic_m3_chip_check
 drawable ic_m3_chip_checked_circle
@@ -3674,7 +3676,12 @@ drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
+drawable ic_pause_circle
+drawable ic_play_circle
+drawable ic_replay_10
 drawable ic_search_black_24
+drawable ic_skip_next
+drawable ic_skip_previous
 drawable lb_action_bg
 drawable lb_action_bg_focused
 drawable lb_background
@@ -3807,6 +3814,9 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable playback_button_background_focused
+drawable playback_button_background_normal
+drawable playback_button_background_selector
 drawable seekbar_background
 drawable seekbar_progress
 drawable seekbar_thumb
@@ -3951,9 +3961,11 @@ id browse_headers_dock
 id browse_headers_root
 id browse_title_group
 id btn_connect
+id btn_forward_10
 id btn_next
 id btn_play_pause
 id btn_previous
+id btn_replay_10
 id button
 id buttonPanel
 id button_start

@@ -142,9 +142,15 @@ class PlaybackActivity : FragmentActivity() {
         binding.btnPlayPause.setOnClickListener {
             if (player?.isPlaying == true) MusicPlayer.pause() else MusicPlayer.resume()
         }
-        // --- BOTONES SIGUIENTE Y ANTERIOR ACTIVADOS ---
         binding.btnNext.setOnClickListener { playNextSong() }
         binding.btnPrevious.setOnClickListener { playPreviousSong() }
+
+        binding.btnReplay10.setOnClickListener {
+            player?.let { it.seekTo(it.currentPosition - 10000) } // Retrocede 10 segundos
+        }
+        binding.btnForward10.setOnClickListener {
+            player?.let { it.seekTo(it.currentPosition + 10000) } // Adelanta 10 segundos
+        }
     }
 
     private fun playNextSong() {
@@ -183,9 +189,11 @@ class PlaybackActivity : FragmentActivity() {
                 binding.tvTotalTime.text = formatDuration(it.duration)
                 binding.seekBar.max = it.duration.toInt()
             }
-            updateSeekBar() // Llama a la función que actualiza la seekbar y el tiempo
+            updateSeekBar()
+            // --- LÍNEA CORREGIDA ---
             binding.btnPlayPause.setImageResource(
-                if (it.isPlaying) android.R.drawable.ic_media_pause else android.R.drawable.ic_media_play
+                if (it.isPlaying) R.drawable.ic_pause_circle
+                else R.drawable.ic_play_circle
             )
         }
     }
