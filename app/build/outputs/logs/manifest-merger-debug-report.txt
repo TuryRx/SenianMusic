@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:2:1-55:12
-INJECTED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:2:1-55:12
-INJECTED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:2:1-55:12
-INJECTED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:2:1-55:12
+ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:2:1-60:12
+INJECTED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:2:1-60:12
+INJECTED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:2:1-60:12
+INJECTED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:2:1-60:12
 MERGED from [androidx.databinding:viewbinding:8.11.0] /home/roxas/.gradle/caches/8.13/transforms/23c60a1fa18d1358db483d833b9b24f9/transformed/viewbinding-8.11.0/AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.material:material:1.11.0] /home/roxas/.gradle/caches/8.13/transforms/121b860448020d519d29d6268e740636/transformed/material-1.11.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /home/roxas/.gradle/caches/8.13/transforms/da0629cdbab2125a234f94971688c4d9/transformed/constraintlayout-2.1.4/AndroidManifest.xml:2:1-11:12
@@ -13,6 +13,7 @@ MERGED from [androidx.appcompat:appcompat-resources:1.6.1] /home/roxas/.gradle/c
 MERGED from [androidx.appcompat:appcompat:1.6.1] /home/roxas/.gradle/caches/8.13/transforms/b44bb95e2989de5164323bc0ef733034/transformed/appcompat-1.6.1/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.leanback:leanback:1.0.0] /home/roxas/.gradle/caches/8.13/transforms/ff10c9676a1839c375542311d153d124/transformed/leanback-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.fragment:fragment-ktx:1.6.2] /home/roxas/.gradle/caches/8.13/transforms/ca99c5465411fefabf1e226f83c944ce/transformed/fragment-ktx-1.6.2/AndroidManifest.xml:17:1-22:12
+MERGED from [jp.wasabeef:glide-transformations:4.3.0] /home/roxas/.gradle/caches/8.13/transforms/4be113629c6f86c6faf2edef856ad245/transformed/glide-transformations-4.3.0/AndroidManifest.xml:2:1-9:12
 MERGED from [com.github.bumptech.glide:glide:4.16.0] /home/roxas/.gradle/caches/8.13/transforms/dfd6e4bdd70e6f983a43d95a1f8a302b/transformed/glide-4.16.0/AndroidManifest.xml:2:1-9:12
 MERGED from [androidx.viewpager2:viewpager2:1.0.0] /home/roxas/.gradle/caches/8.13/transforms/f97b045f414d645edf3b5720c19d8d2e/transformed/viewpager2-1.0.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.fragment:fragment:1.6.2] /home/roxas/.gradle/caches/8.13/transforms/5f34185970b6bf93a882ad118e09f522/transformed/fragment-1.6.2/AndroidManifest.xml:17:1-22:12
@@ -118,8 +119,8 @@ ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidMan
 	android:name
 		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:14:9-49
 application
-ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:17:5-53:19
-INJECTED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:17:5-53:19
+ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:17:5-58:19
+INJECTED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:17:5-58:19
 MERGED from [com.google.android.material:material:1.11.0] /home/roxas/.gradle/caches/8.13/transforms/121b860448020d519d29d6268e740636/transformed/material-1.11.0/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.11.0] /home/roxas/.gradle/caches/8.13/transforms/121b860448020d519d29d6268e740636/transformed/material-1.11.0/AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /home/roxas/.gradle/caches/8.13/transforms/da0629cdbab2125a234f94971688c4d9/transformed/constraintlayout-2.1.4/AndroidManifest.xml:9:5-20
@@ -147,7 +148,7 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/roxas
 	android:label
 		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:21:9-41
 	tools:targetApi
-		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:24:9-29
+		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:25:9-29
 	android:icon
 		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:19:9-43
 	android:allowBackup
@@ -156,58 +157,68 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/roxas
 		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:20:9-46
 	android:theme
 		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:23:9-49
+	android:networkSecurityConfig
+		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:24:9-69
 activity#com.example.senianmusic.ui.login.LoginActivity
-ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:27:9-34:20
+ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:28:9-35:20
 	android:exported
-		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:29:13-36
+		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:30:13-36
 	android:name
-		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:28:13-51
+		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:29:13-51
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LEANBACK_LAUNCHER
-ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:30:13-33:29
+ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:31:13-34:29
 action#android.intent.action.MAIN
-ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:31:17-69
+ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:32:17-69
 	android:name
-		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:31:25-66
+		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:32:25-66
 category#android.intent.category.LEANBACK_LAUNCHER
-ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:32:17-86
+ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:33:17-86
 	android:name
-		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:32:27-83
+		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:33:27-83
 activity#com.example.senianmusic.MainActivity
-ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:37:9-50
+ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:38:9-50
 	android:name
-		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:37:19-47
+		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:38:19-47
 activity#com.example.senianmusic.DetailsActivity
-ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:38:9-78
+ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:39:9-78
 	android:exported
-		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:38:51-75
+		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:39:51-75
 	android:name
-		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:38:19-50
+		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:39:19-50
 activity#com.example.senianmusic.PlaybackActivity
-ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:39:9-79
+ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:40:9-79
 	android:exported
-		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:39:52-76
+		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:40:52-76
 	android:name
-		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:39:19-51
+		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:40:19-51
 activity#com.example.senianmusic.BrowseErrorActivity
-ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:40:9-82
+ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:41:9-82
 	android:exported
-		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:40:55-79
+		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:41:55-79
 	android:name
-		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:40:19-54
+		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:41:19-54
+activity#com.example.senianmusic.ui.playback.PlaybackActivity
+ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:42:9-45:65
+	android:exported
+		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:44:13-37
+	android:theme
+		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:45:13-62
+	android:name
+		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:43:13-57
 service#com.example.senianmusic.player.PlaybackService
-ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:44:9-51:19
+ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:49:9-56:19
 	android:exported
-		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:46:13-36
+		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:51:13-36
 	android:foregroundServiceType
-		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:47:13-58
+		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:52:13-58
 	android:name
-		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:45:13-51
+		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:50:13-51
 intent-filter#action:name:androidx.media3.session.MediaSessionService
-ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:48:13-50:29
+ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:53:13-55:29
 action#androidx.media3.session.MediaSessionService
-ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:49:17-85
+ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:54:17-85
 	android:name
-		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:49:25-83
+		ADDED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:54:25-83
 uses-sdk
 INJECTED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml
@@ -230,6 +241,8 @@ MERGED from [androidx.leanback:leanback:1.0.0] /home/roxas/.gradle/caches/8.13/t
 MERGED from [androidx.leanback:leanback:1.0.0] /home/roxas/.gradle/caches/8.13/transforms/ff10c9676a1839c375542311d153d124/transformed/leanback-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.fragment:fragment-ktx:1.6.2] /home/roxas/.gradle/caches/8.13/transforms/ca99c5465411fefabf1e226f83c944ce/transformed/fragment-ktx-1.6.2/AndroidManifest.xml:20:5-44
 MERGED from [androidx.fragment:fragment-ktx:1.6.2] /home/roxas/.gradle/caches/8.13/transforms/ca99c5465411fefabf1e226f83c944ce/transformed/fragment-ktx-1.6.2/AndroidManifest.xml:20:5-44
+MERGED from [jp.wasabeef:glide-transformations:4.3.0] /home/roxas/.gradle/caches/8.13/transforms/4be113629c6f86c6faf2edef856ad245/transformed/glide-transformations-4.3.0/AndroidManifest.xml:5:5-7:41
+MERGED from [jp.wasabeef:glide-transformations:4.3.0] /home/roxas/.gradle/caches/8.13/transforms/4be113629c6f86c6faf2edef856ad245/transformed/glide-transformations-4.3.0/AndroidManifest.xml:5:5-7:41
 MERGED from [com.github.bumptech.glide:glide:4.16.0] /home/roxas/.gradle/caches/8.13/transforms/dfd6e4bdd70e6f983a43d95a1f8a302b/transformed/glide-4.16.0/AndroidManifest.xml:5:5-7:41
 MERGED from [com.github.bumptech.glide:glide:4.16.0] /home/roxas/.gradle/caches/8.13/transforms/dfd6e4bdd70e6f983a43d95a1f8a302b/transformed/glide-4.16.0/AndroidManifest.xml:5:5-7:41
 MERGED from [androidx.viewpager2:viewpager2:1.0.0] /home/roxas/.gradle/caches/8.13/transforms/f97b045f414d645edf3b5720c19d8d2e/transformed/viewpager2-1.0.0/AndroidManifest.xml:20:5-22:41

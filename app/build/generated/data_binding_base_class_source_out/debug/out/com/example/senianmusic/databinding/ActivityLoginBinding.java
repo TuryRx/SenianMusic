@@ -5,32 +5,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.example.senianmusic.R;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
 
 public final class ActivityLoginBinding implements ViewBinding {
   @NonNull
-  private final ConstraintLayout rootView;
+  private final LinearLayout rootView;
 
   @NonNull
   public final Button connectButton;
 
   @NonNull
-  public final TextInputEditText passwordEditText;
-
-  @NonNull
-  public final TextInputLayout passwordInputLayout;
+  public final EditText passwordEditText;
 
   @NonNull
   public final ProgressBar progressBar;
@@ -39,37 +35,27 @@ public final class ActivityLoginBinding implements ViewBinding {
   public final TextView titleTextView;
 
   @NonNull
-  public final TextInputEditText urlEditText;
+  public final EditText urlEditText;
 
   @NonNull
-  public final TextInputLayout urlInputLayout;
+  public final EditText userEditText;
 
-  @NonNull
-  public final TextInputEditText userEditText;
-
-  @NonNull
-  public final TextInputLayout userInputLayout;
-
-  private ActivityLoginBinding(@NonNull ConstraintLayout rootView, @NonNull Button connectButton,
-      @NonNull TextInputEditText passwordEditText, @NonNull TextInputLayout passwordInputLayout,
-      @NonNull ProgressBar progressBar, @NonNull TextView titleTextView,
-      @NonNull TextInputEditText urlEditText, @NonNull TextInputLayout urlInputLayout,
-      @NonNull TextInputEditText userEditText, @NonNull TextInputLayout userInputLayout) {
+  private ActivityLoginBinding(@NonNull LinearLayout rootView, @NonNull Button connectButton,
+      @NonNull EditText passwordEditText, @NonNull ProgressBar progressBar,
+      @NonNull TextView titleTextView, @NonNull EditText urlEditText,
+      @NonNull EditText userEditText) {
     this.rootView = rootView;
     this.connectButton = connectButton;
     this.passwordEditText = passwordEditText;
-    this.passwordInputLayout = passwordInputLayout;
     this.progressBar = progressBar;
     this.titleTextView = titleTextView;
     this.urlEditText = urlEditText;
-    this.urlInputLayout = urlInputLayout;
     this.userEditText = userEditText;
-    this.userInputLayout = userInputLayout;
   }
 
   @Override
   @NonNull
-  public ConstraintLayout getRoot() {
+  public LinearLayout getRoot() {
     return rootView;
   }
 
@@ -101,14 +87,8 @@ public final class ActivityLoginBinding implements ViewBinding {
       }
 
       id = R.id.passwordEditText;
-      TextInputEditText passwordEditText = ViewBindings.findChildViewById(rootView, id);
+      EditText passwordEditText = ViewBindings.findChildViewById(rootView, id);
       if (passwordEditText == null) {
-        break missingId;
-      }
-
-      id = R.id.passwordInputLayout;
-      TextInputLayout passwordInputLayout = ViewBindings.findChildViewById(rootView, id);
-      if (passwordInputLayout == null) {
         break missingId;
       }
 
@@ -125,32 +105,19 @@ public final class ActivityLoginBinding implements ViewBinding {
       }
 
       id = R.id.urlEditText;
-      TextInputEditText urlEditText = ViewBindings.findChildViewById(rootView, id);
+      EditText urlEditText = ViewBindings.findChildViewById(rootView, id);
       if (urlEditText == null) {
         break missingId;
       }
 
-      id = R.id.urlInputLayout;
-      TextInputLayout urlInputLayout = ViewBindings.findChildViewById(rootView, id);
-      if (urlInputLayout == null) {
-        break missingId;
-      }
-
       id = R.id.userEditText;
-      TextInputEditText userEditText = ViewBindings.findChildViewById(rootView, id);
+      EditText userEditText = ViewBindings.findChildViewById(rootView, id);
       if (userEditText == null) {
         break missingId;
       }
 
-      id = R.id.userInputLayout;
-      TextInputLayout userInputLayout = ViewBindings.findChildViewById(rootView, id);
-      if (userInputLayout == null) {
-        break missingId;
-      }
-
-      return new ActivityLoginBinding((ConstraintLayout) rootView, connectButton, passwordEditText,
-          passwordInputLayout, progressBar, titleTextView, urlEditText, urlInputLayout,
-          userEditText, userInputLayout);
+      return new ActivityLoginBinding((LinearLayout) rootView, connectButton, passwordEditText,
+          progressBar, titleTextView, urlEditText, userEditText);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

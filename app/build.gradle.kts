@@ -3,6 +3,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
     //id("kotlin-kapt")
     alias(libs.plugins.ksp)                 // Usa el alias que creaste
+    id("kotlin-parcelize")
+
 }
 
 android {
@@ -87,4 +89,7 @@ dependencies {
 
     // --- Carga de imágenes (Coil es moderno y basado en coroutines) ---
     implementation("io.coil-kt:coil:2.5.0")
+
+    // Librería para transformaciones de Glide (desenfoque, etc.)
+    implementation("jp.wasabeef:glide-transformations:4.3.0")
 }

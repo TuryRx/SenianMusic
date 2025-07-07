@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Este es el contenedor para el fragmento principal de Leanback -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main_browse_fragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" />

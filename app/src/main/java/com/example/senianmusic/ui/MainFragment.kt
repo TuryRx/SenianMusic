@@ -1,8 +1,7 @@
-// Asegúrate de que el paquete sea el correcto
 package com.example.senianmusic.ui
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
@@ -10,70 +9,103 @@ import androidx.leanback.app.BrowseSupportFragment
 import androidx.leanback.widget.*
 import androidx.lifecycle.lifecycleScope
 import com.example.senianmusic.R
-import com.example.senianmusic.data.remote.model.Song // O el modelo que uses, como Artist
+import com.example.senianmusic.data.remote.model.Song
 import com.example.senianmusic.ui.main.MainViewModel
 import com.example.senianmusic.ui.main.MainViewModelFactory
-import com.example.senianmusic.ui.presenter.CardPresenter // Asegúrate de que esta clase exista
+import com.example.senianmusic.ui.playback.PlaybackActivity
+import com.example.senianmusic.ui.presenter.CardPresenter
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class MainFragment : BrowseSupportFragment() {
 
     private val viewModel: MainViewModel by viewModels {
-        // Asegúrate de que MainViewModelFactory exista y funcione
-        MainViewModelFactory(requireContext().applicationContext)
+        MainViewModelFactory(requireActivity().applicationContext)
     }
+
+    private lateinit var rowsAdapter: ArrayObjectAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupUI()
+        setupAdapter()
+        setupEventListeners()
+        observeViewModelAndLoadData()
+    }
 
+    private fun setupUI() {
         title = "SenianMusic"
         headersState = HEADERS_ENABLED
         isHeadersTransitionOnBackEnabled = true
-        brandColor = requireContext().getColor(R.color.fastlane_background) // Asegúrate de tener este color en colors.xml
-        searchAffordanceColor = requireContext().getColor(R.color.search_opaque) // Y este también
+    }
 
-        setupEventListeners()
-        setupRows()
-        observeViewModel()
+    private fun setupAdapter() {
+        rowsAdapter = ArrayObjectAdapter(ListRowPresenter())
+        adapter = rowsAdapter
     }
 
     private fun setupEventListeners() {
-        onItemViewClickedListener = OnItemViewClickedListener { _, item, _, _ ->
-            // Aquí manejas el clic en cualquier tarjeta
-            if (item is Song) { // Cambia 'Song' por el tipo de dato que estés mostrando
-                Toast.makeText(requireContext(), "Clicked on: ${item.title}", Toast.LENGTH_SHORT).show()
-                // Aquí podrías navegar a otra pantalla o reproducir
+        onItemViewClickedListener = OnItemViewClickedListener { _, item, _, row ->
+            if (item is Song) {
+                val listRow = row as ListRow
+                val listRowAdapter = listRow.adapter as ArrayObjectAdapter
+
+                // Creamos una ArrayList<Song> que es Parcelable
+                val playlist = ArrayList<Song>()
+                for (i in 0 until listRowAdapter.size()) {
+                    playlist.add(listRowAdapter.get(i) as Song)
+                }
+
+                val currentIndex = playlist.indexOf(item)
+
+                val intent = Intent(requireActivity(), PlaybackActivity::class.java).apply {
+                    // --- VOLVEMOS A ENVIAR LA LISTA COMPLETA ---
+                    putParcelableArrayListExtra("PLAYLIST", playlist)
+                    putExtra("CURRENT_SONG_INDEX", currentIndex)
+                }
+                startActivity(intent)
             }
         }
     }
 
-    private fun setupRows() {
-        // Un ObjectAdapter que contendrá todas las filas (ListRow)
-        val rowsAdapter = ArrayObjectAdapter(ListRowPresenter())
-
-        // --- Ejemplo de cómo añadir una fila ---
-        val cardPresenter = CardPresenter()
-        val listRowAdapter = ArrayObjectAdapter(cardPresenter)
-
-        val header = HeaderItem(0, "Canciones Populares")
-        rowsAdapter.add(ListRow(header, listRowAdapter))
-        // -------------------------------------
-
-        adapter = rowsAdapter
-    }
-
-    private fun observeViewModel() {
-        // Observa los datos del ViewModel
+    private fun observeViewModelAndLoadData() {
         lifecycleScope.launch {
             viewModel.songs.collectLatest { songList ->
-                // Obtenemos el adapter de la primera fila
-                val listRow = adapter.get(0) as ListRow
-                val listRowAdapter = listRow.adapter as ArrayObjectAdapter
-
-                // Actualizamos los datos de la fila
-                listRowAdapter.setItems(songList, null)
+                updateSongsRow(songList)
             }
+        }
+        viewModel.loadInitialData()
+    }
+
+    private fun updateSongsRow(songs: List<Song>) {
+        val songRowId = 1L
+        val headerName = "Canciones Populares"
+        var songRow: ListRow? = null
+        for (i in 0 until rowsAdapter.size()) {
+            val row = rowsAdapter.get(i) as ListRow
+            if (row.headerItem.id == songRowId) {
+                songRow = row
+                break
+            }
+        }
+
+        if (songs.isEmpty()) {
+            if (songRow != null) {
+                rowsAdapter.remove(songRow)
+            }
+            return
+        }
+
+        if (songRow == null) {
+            val cardPresenter = CardPresenter()
+            val listRowAdapter = ArrayObjectAdapter(cardPresenter)
+            listRowAdapter.setItems(songs, null)
+            val header = HeaderItem(songRowId, headerName)
+            songRow = ListRow(header, listRowAdapter)
+            rowsAdapter.add(songRow)
+        } else {
+            val listRowAdapter = songRow.adapter as ArrayObjectAdapter
+            listRowAdapter.setItems(songs, null)
         }
     }
 }

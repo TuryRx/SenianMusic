@@ -2391,6 +2391,7 @@ color primary_text_default_material_dark
 color primary_text_default_material_light
 color primary_text_disabled_material_dark
 color primary_text_disabled_material_light
+color purple_500
 color ripple_material_dark
 color ripple_material_light
 color search_opaque
@@ -3806,6 +3807,9 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable seekbar_background
+drawable seekbar_progress
+drawable seekbar_thumb
 drawable test_level_drawable
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
@@ -3947,6 +3951,9 @@ id browse_headers_dock
 id browse_headers_root
 id browse_title_group
 id btn_connect
+id btn_next
+id btn_play_pause
+id btn_previous
 id button
 id buttonPanel
 id button_start
@@ -3954,6 +3961,7 @@ id cache_measures
 id callMeasure
 id cancel_action
 id cancel_button
+id card_view_cover_art
 id carryVelocity
 id center
 id centerCrop
@@ -3994,6 +4002,7 @@ id controls_card
 id controls_card_right_panel
 id controls_container
 id controls_dock
+id controls_layout
 id coordinator
 id cos
 id counterclockwise
@@ -4204,6 +4213,8 @@ id inward
 id is_pooling_container_tag
 id italic
 id item_touch_helper_previous_elevation
+id iv_background
+id iv_cover_art
 id jumpToEnd
 id jumpToStart
 id label
@@ -4378,7 +4389,6 @@ id parentPanel
 id parentRelative
 id parent_matrix
 id passwordEditText
-id passwordInputLayout
 id password_toggle
 id path
 id pathRelative
@@ -4436,6 +4446,8 @@ id search_plate
 id search_src_text
 id search_voice_btn
 id secondary_controls_dock
+id seek_bar
+id seekbar_layout
 id select_dialog_listview
 id selected
 id selection_type
@@ -4537,15 +4549,17 @@ id transition_scene_layoutid_cache
 id transition_transform
 id transport_row
 id triangle
+id tv_current_time
+id tv_song_artist
+id tv_song_title
+id tv_total_time
 id unchecked
 id uniform
 id unlabeled
 id up
 id urlEditText
-id urlInputLayout
 id useLogo
 id userEditText
-id userInputLayout
 id vertical_only
 id video_decoder_gl_surface_view
 id video_surface
@@ -4723,6 +4737,7 @@ layout abc_tooltip
 layout activity_details
 layout activity_login
 layout activity_main
+layout activity_playback
 layout activity_setup
 layout custom_dialog
 layout design_bottom_navigation_item
@@ -5871,6 +5886,7 @@ style Theme_MaterialComponents_Light_NoActionBar_Bridge
 style Theme_MaterialComponents_NoActionBar
 style Theme_MaterialComponents_NoActionBar_Bridge
 style Theme_SenianMusic
+style Theme_SenianMusic_Playback
 style ThemeOverlay_AppCompat
 style ThemeOverlay_AppCompat_ActionBar
 style ThemeOverlay_AppCompat_Dark
@@ -6630,3 +6646,4 @@ transition lb_title_out
 transition lb_vertical_grid_enter_transition
 transition lb_vertical_grid_entrance_transition
 transition lb_vertical_grid_return_transition
+xml network_security_config

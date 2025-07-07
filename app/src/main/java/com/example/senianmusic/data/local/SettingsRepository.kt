@@ -9,30 +9,37 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-// 1. Declaramos la instancia de DataStore aquí, a nivel de archivo.
-//    Esto asegura que solo haya UNA instancia en toda la app.
+// La instancia única de DataStore para toda la app.
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
-class SettingsRepository(private val context: Context) { // <-- Seguimos necesitando el contexto
+class SettingsRepository(private val context: Context) {
 
-    // 2. Definimos las claves para nuestras preferencias.
     companion object {
+        // Claves para todas las preferencias que vamos a guardar.
         val SERVER_URL_KEY = stringPreferencesKey("server_url")
-        // Aquí puedes añadir más claves, como USERNAME_KEY, TOKEN_KEY, etc.
+        val USERNAME_KEY = stringPreferencesKey("username")
+        val TOKEN_KEY = stringPreferencesKey("token") // El token MD5
+        val SALT_KEY = stringPreferencesKey("salt")
     }
 
-    // 3. Creamos un Flow para leer la URL del servidor.
-    val serverUrlFlow: Flow<String?> = context.dataStore.data
-        .map { preferences ->
-            preferences[SERVER_URL_KEY]
-        }
+    // Flujos para leer los datos de la sesión guardada.
+    val serverUrlFlow: Flow<String?> = context.dataStore.data.map { it[SERVER_URL_KEY] }
+    val usernameFlow: Flow<String?> = context.dataStore.data.map { it[USERNAME_KEY] }
+    val tokenFlow: Flow<String?> = context.dataStore.data.map { it[TOKEN_KEY] }
+    val saltFlow: Flow<String?> = context.dataStore.data.map { it[SALT_KEY] }
 
-    // 4. Creamos una función suspendida para guardar la URL del servidor.
-    suspend fun saveServerUrl(url: String) {
+    // Función para guardar toda la sesión de una vez.
+    suspend fun saveLoginSession(url: String, user: String, token: String, salt: String) {
         context.dataStore.edit { settings ->
             settings[SERVER_URL_KEY] = url
+            settings[USERNAME_KEY] = user
+            settings[TOKEN_KEY] = token
+            settings[SALT_KEY] = salt
         }
     }
 
-    // Puedes añadir más funciones para guardar/leer otras preferencias aquí
+    // Función para borrar la sesión (logout).
+    suspend fun clearLoginSession() {
+        context.dataStore.edit { it.clear() }
+    }
 }

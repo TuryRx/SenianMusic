@@ -5,33 +5,39 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.senianmusic.data.local.AppDatabase
 import com.example.senianmusic.data.local.SettingsRepository
+import com.example.senianmusic.data.remote.RetrofitClient // <-- IMPORT NECESARIO
 import com.example.senianmusic.data.repository.MusicRepository
 
-// 1. La fábrica necesita el Context para poder crear las dependencias.
+// La fábrica sigue necesitando solo el Context para empezar.
 class MainViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
 
-    // 2. Este es el método clave que el sistema llamará.
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        // Comprueba si el ViewModel que se pide es el MainViewModel
+        // Comprueba si el ViewModel que se pide es MainViewModel.
         if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
 
-            // --- AQUÍ ESTÁ LA LÓGICA DE CREACIÓN DE DEPENDENCIAS ---
-            // Esto es exactamente el código que te mostré antes, pero en el lugar correcto.
+            // --- LÓGICA DE INYECCIÓN DE DEPENDENCIAS (MANUAL) ---
 
-            // a. Crea las dependencias que MusicRepository necesita
-            val db = AppDatabase.getDatabase(context.applicationContext)
-            val songDao = db.songDao()
+            // 1. Obtenemos la instancia del servicio de la API desde nuestro RetrofitClient.
+            //    Esto funcionará porque RetrofitClient ya fue inicializado en LoginActivity.
+            val apiService = RetrofitClient.getApiService()
+
+            // 2. Creamos las dependencias locales como antes.
             val settingsRepository = SettingsRepository(context.applicationContext)
+            val songDao = AppDatabase.getDatabase(context.applicationContext).songDao()
 
-            // b. Crea la instancia del MusicRepository con todo lo que necesita
-            val musicRepository = MusicRepository(songDao, settingsRepository)
+            // 3. Creamos la instancia del MusicRepository pasándole TODAS sus dependencias.
+            val musicRepository = MusicRepository(
+                context = context.applicationContext,
+                songDao = songDao,
+                settingsRepository = settingsRepository,
+                apiService = apiService
+            )
 
-            // c. Crea el MainViewModel y se lo pasa al sistema.
-            // La supresión de advertencia es segura aquí porque ya hemos comprobado el tipo.
+            // 4. Creamos el MainViewModel con el repositorio ya listo.
             @Suppress("UNCHECKED_CAST")
             return MainViewModel(musicRepository) as T
         }
-        // Si se pide un ViewModel desconocido, lanza una excepción.
+        // Si se intenta crear un ViewModel desconocido, lanzamos una excepción.
         throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

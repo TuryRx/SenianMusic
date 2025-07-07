@@ -24,15 +24,12 @@ class CardPresenter : Presenter() {
         cardView.contentText = song.artist
         cardView.setMainImageDimensions(313, 176)
 
-        // --- LÍNEA CORREGIDA ---
-        // Obtenemos la URL base de algún sitio (por ahora, la ponemos directamente para probar)
-        val baseUrl = "http://192.168.1.100:4533/" // <-- ¡CAMBIA ESTO A LA URL DE TU NAVIDROME REAL SI QUIERES VER IMÁGENES!
-        val imageUrl = song.getCoverArtUrl(baseUrl)
-
+        // ¡Esta línea ahora funciona!
+        // El repositorio ya se encargó de poner la URL completa en 'song.coverArtUrl'.
         Glide.with(viewHolder.view.context)
-            .load(imageUrl) // Usamos la URL que construimos
+            .load(song.coverArtUrl)
             .centerCrop()
-            .error(R.drawable.movie) // Placeholder si la URL es nula o falla
+            .error(R.drawable.movie)
             .into(cardView.mainImageView)
     }
 

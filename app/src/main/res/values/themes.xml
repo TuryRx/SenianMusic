@@ -1,4 +1,18 @@
-<resources>
+<!-- En themes.xml -->
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Theme.SenianMusic" parent="@style/Theme.Leanback" />
+    <!-- Este es tu tema principal para la app de TV -->
+    <style name="Theme.SenianMusic" parent="Theme.Leanback">
+        <!-- ... tus personalizaciones ... -->
+    </style>
+
+    <!-- === NUEVO TEMA AÑADIDO === -->
+    <!-- Tema específico para la pantalla del reproductor, basado en Material Components. -->
+    <!-- Esto asegura que todos los botones y componentes visuales funcionen. -->
+    <style name="Theme.SenianMusic.Playback" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Puedes añadir personalizaciones de color aquí si quieres -->
+        <!-- <item name="colorPrimary">@color/purple_500</item> -->
+    </style>
+    <!-- ========================== -->
+
 </resources>
