@@ -6,6 +6,7 @@ import android.util.Log // <-- IMPORT AÑADIDO
 import android.view.View // <-- IMPORT AÑADIDO
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.senianmusic.MainActivity
 import com.example.senianmusic.data.local.SettingsRepository
@@ -13,7 +14,7 @@ import com.example.senianmusic.data.remote.RetrofitClient
 import com.example.senianmusic.databinding.ActivityLoginBinding
 import kotlinx.coroutines.launch
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : FragmentActivity() {
     private lateinit var settingsRepository: SettingsRepository
     private lateinit var binding: ActivityLoginBinding
 
