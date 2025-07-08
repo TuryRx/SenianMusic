@@ -40,6 +40,9 @@
         <activity android:name=".PlaybackActivity" android:exported="false" />
         <activity android:name=".BrowseErrorActivity" android:exported="false" />
         <activity
+            android:name=".ui.search.SearchActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.playback.PlaybackActivity"
             android:exported="false"
             android:theme="@style/Theme.SenianMusic.Playback" /> <!-- TEMA APLICADO -->

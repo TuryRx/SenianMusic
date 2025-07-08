@@ -76,6 +76,10 @@
         "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/mipmap-xxhdpi/ic_launcher_foreground.webp"
     },
     {
+        "merged": "com.example.senianmusic.app-debug-51:/drawable_player_bar_button_background.xml.flat",
+        "source": "com.example.senianmusic.app-main-53:/drawable/player_bar_button_background.xml"
+    },
+    {
         "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-debug-51:/mipmap-xhdpi_ic_launcher_round.webp.flat",
         "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/mipmap-xhdpi/ic_launcher_round.webp"
     },
@@ -96,12 +100,12 @@
         "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/mipmap-xxhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-debug-51:/drawable_ic_forward_10.xml.flat",
-        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/drawable/ic_forward_10.xml"
-    },
-    {
         "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-debug-51:/drawable_player_bar_button_background.xml.flat",
         "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/drawable/player_bar_button_background.xml"
+    },
+    {
+        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-debug-51:/drawable_ic_forward_10.xml.flat",
+        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/drawable/ic_forward_10.xml"
     },
     {
         "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-debug-51:/drawable_ic_skip_previous.xml.flat",
@@ -156,10 +160,6 @@
         "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/drawable/app_banner.png"
     },
     {
-        "merged": "com.example.senianmusic.app-debug-51:/layout_now_playing_card.xml.flat",
-        "source": "com.example.senianmusic.app-main-53:/layout/now_playing_card.xml"
-    },
-    {
         "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-debug-51:/mipmap-anydpi-v26_ic_launcher.xml.flat",
         "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/mipmap-anydpi-v26/ic_launcher.xml"
     },
@@ -178,6 +178,10 @@
     {
         "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-debug-51:/layout_playing_indicator.xml.flat",
         "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/layout/playing_indicator.xml"
+    },
+    {
+        "merged": "com.example.senianmusic.app-debug-51:/layout_activity_search.xml.flat",
+        "source": "com.example.senianmusic.app-main-53:/layout/activity_search.xml"
     },
     {
         "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-debug-51:/anim_slide_out_to_bottom.xml.flat",

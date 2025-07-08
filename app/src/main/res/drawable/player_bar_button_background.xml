@@ -1,25 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-    Este selector hace que el fondo del botón sea transparente por defecto,
-    y le pone un color gris semitransparente cuando se presiona o se enfoca.
--->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <!-- Estado cuando el botón está presionado -->
-    <item android:state_pressed="true">
-        <shape android:shape="oval">
-            <solid android:color="#40CCCCCC" /> <!-- Gris claro con 25% de opacidad -->
-        </shape>
-    </item>
-
-    <!-- Estado cuando el botón tiene el foco (navegación con D-Pad) -->
+    <!-- Estado: Cuando el botón está enfocado -->
     <item android:state_focused="true">
         <shape android:shape="oval">
-            <solid android:color="#40CCCCCC" />
+            <!-- Un color semi-transparente para el fondo del foco -->
+            <solid android:color="#4DFFFFFF" />
         </shape>
     </item>
-
-    <!-- Estado por defecto (transparente) -->
-    <item android:drawable="@android:color/transparent" />
-
+    <!-- Estado: por defecto (cuando no está enfocado) -->
+    <item>
+        <shape android:shape="oval">
+            <!-- Completamente transparente -->
+            <solid android:color="@android:color/transparent" />
+        </shape>
+    </item>
 </selector>

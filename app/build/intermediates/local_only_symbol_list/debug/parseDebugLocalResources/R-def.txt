@@ -61,6 +61,7 @@ id now_playing_card
 id now_playing_progress
 id passwordEditText
 id progressBar
+id search_fragment_container
 id seek_bar
 id seekbar_layout
 id titleTextView
@@ -78,6 +79,7 @@ layout activity_details
 layout activity_login
 layout activity_main
 layout activity_playback
+layout activity_search
 layout activity_setup
 layout now_playing_card
 layout playing_indicator

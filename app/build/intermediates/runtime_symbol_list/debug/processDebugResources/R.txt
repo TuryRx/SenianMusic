@@ -3822,13 +3822,13 @@ int drawable notify_panel_notification_icon_bg 0x7f080177
 int drawable playback_button_background_focused 0x7f080178
 int drawable playback_button_background_normal 0x7f080179
 int drawable playback_button_background_selector 0x7f08017a
-int drawable player_bar_button_background 0x7f080181
-int drawable seekbar_background 0x7f08017b
-int drawable seekbar_progress 0x7f08017c
-int drawable seekbar_thumb 0x7f08017d
-int drawable test_level_drawable 0x7f08017e
-int drawable tooltip_frame_dark 0x7f08017f
-int drawable tooltip_frame_light 0x7f080180
+int drawable player_bar_button_background 0x7f08017b
+int drawable seekbar_background 0x7f08017c
+int drawable seekbar_progress 0x7f08017d
+int drawable seekbar_thumb 0x7f08017e
+int drawable test_level_drawable 0x7f08017f
+int drawable tooltip_frame_dark 0x7f080180
+int drawable tooltip_frame_light 0x7f080181
 int font roboto_medium_numbers 0x7f090000
 int fraction lb_browse_header_unselect_alpha 0x7f0a0000
 int fraction lb_browse_rows_scale 0x7f0a0001
@@ -4468,6 +4468,7 @@ int id search_bar 0x7f0b0270
 int id search_button 0x7f0b0271
 int id search_close_btn 0x7f0b0272
 int id search_edit_frame 0x7f0b0273
+int id search_fragment_container 0x7f0b0308
 int id search_go_btn 0x7f0b0274
 int id search_mag_icon 0x7f0b0275
 int id search_orb 0x7f0b0276
@@ -4771,6 +4772,7 @@ int layout activity_details 0x7f0e001c
 int layout activity_login 0x7f0e001d
 int layout activity_main 0x7f0e001e
 int layout activity_playback 0x7f0e001f
+int layout activity_search 0x7f0e00c1
 int layout activity_setup 0x7f0e0020
 int layout custom_dialog 0x7f0e0021
 int layout design_bottom_navigation_item 0x7f0e0022

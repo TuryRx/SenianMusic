@@ -4469,6 +4469,7 @@ id search_bar
 id search_button
 id search_close_btn
 id search_edit_frame
+id search_fragment_container
 id search_go_btn
 id search_mag_icon
 id search_orb
@@ -4772,6 +4773,7 @@ layout activity_details
 layout activity_login
 layout activity_main
 layout activity_playback
+layout activity_search
 layout activity_setup
 layout custom_dialog
 layout design_bottom_navigation_item
