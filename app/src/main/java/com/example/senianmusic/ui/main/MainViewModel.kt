@@ -18,47 +18,27 @@ class MainViewModel(private val musicRepository: MusicRepository) : ViewModel() 
 
     fun loadInitialData() {
         viewModelScope.launch {
-            Log.d("MainViewModel", "Iniciando carga de datos de la pantalla de inicio...")
-            try {
-                // Lanzamos todas las llamadas a la API en paralelo
-                val randomSongsDeferred = async { musicRepository.fetchRandomSongs() }
+            // ...
+            val randomSongsDeferred = async { musicRepository.fetchRandomSongs() }
+            // --- CAMBIO: LLAMAMOS A LA NUEVA FUNCIÓN ---
+            val newestAlbumsDeferred = async { musicRepository.fetchAlbumList("newest") }
+            val recentAlbumsDeferred = async { musicRepository.fetchAlbumList("recent") }
+            val recommendedSongsDeferred = async { musicRepository.fetchTopSongs() }
 
-                // --- ¡AQUÍ ESTÁ LA LÓGICA CORREGIDA! ---
-                // "newest" para los álbumes recién AÑADIDOS a la biblioteca
-                val newestSongsDeferred = async { musicRepository.fetchSongsFromAlbumList("newest") }
-                // "recent" para los álbumes recién REPRODUCIDOS
-                val recentSongsDeferred = async { musicRepository.fetchSongsFromAlbumList("recent") }
+            val randomSongs = randomSongsDeferred.await()
+            val newestAlbums = newestAlbumsDeferred.await() // <-- Ahora son álbumes
+            val recentAlbums = recentAlbumsDeferred.await() // <-- Ahora son álbumes
+            val recommendedSongs = recommendedSongsDeferred.await()
 
-                val recommendedSongsDeferred = async { musicRepository.fetchTopSongs() }
+            val rows = mutableListOf<HomeScreenRow>()
+            if (randomSongs.isNotEmpty()) rows.add(HomeScreenRow.RandomSongsRow(randomSongs))
+            // --- CAMBIO: AÑADIMOS FILAS DE ÁLBUMES ---
+            if (newestAlbums.isNotEmpty()) rows.add(HomeScreenRow.RecentlyAddedRow(newestAlbums))
+            if (recentAlbums.isNotEmpty()) rows.add(HomeScreenRow.RecentlyPlayedRow(recentAlbums))
+            if (recommendedSongs.isNotEmpty()) rows.add(HomeScreenRow.RecommendedRow(recommendedSongs))
 
-                // Esperamos a que todas las llamadas terminen
-                val randomSongs = randomSongsDeferred.await()
-                val newestSongs = newestSongsDeferred.await() // <-- Nueva variable
-                val recentSongs = recentSongsDeferred.await() // <-- Ahora es para las reproducidas
-                val recommendedSongs = recommendedSongsDeferred.await()
-
-                val rows = mutableListOf<HomeScreenRow>()
-                if (randomSongs.isNotEmpty()) {
-                    rows.add(HomeScreenRow.RandomSongsRow(randomSongs))
-                }
-                // Usamos la variable y el tipo de fila correctos
-                if (newestSongs.isNotEmpty()) {
-                    rows.add(HomeScreenRow.RecentlyAddedRow(newestSongs))
-                }
-                // Usamos la variable y el tipo de fila correctos
-                if (recentSongs.isNotEmpty()) {
-                    rows.add(HomeScreenRow.RecentlyPlayedRow(recentSongs))
-                }
-                if (recommendedSongs.isNotEmpty()) {
-                    rows.add(HomeScreenRow.RecommendedRow(recommendedSongs))
-                }
-
-                _homeScreenRows.value = rows
-                Log.d("MainViewModel", "Carga finalizada. ${rows.size} filas creadas.")
-
-            } catch (e: Exception) {
-                Log.e("MainViewModel", "Error al cargar los datos de inicio", e)
-            }
+            _homeScreenRows.value = rows
+            // ...
         }
     }
 
@@ -81,5 +61,9 @@ class MainViewModel(private val musicRepository: MusicRepository) : ViewModel() 
      */
     suspend fun getCoverUrlForSong(song: Song): String? {
         return musicRepository.getCoverUrlForSong(song)
+    }
+
+    suspend fun fetchAlbumSongs(albumId: String): List<Song> {
+        return musicRepository.fetchAlbumDetails(albumId)
     }
 }

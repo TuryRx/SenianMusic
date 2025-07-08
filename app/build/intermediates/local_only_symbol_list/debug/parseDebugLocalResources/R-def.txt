@@ -32,6 +32,7 @@ drawable player_bar_button_background
 drawable seekbar_background
 drawable seekbar_progress
 drawable seekbar_thumb
+id album_detail_container
 id bottom_player_bar_container
 id btn_connect
 id btn_favorite
@@ -75,6 +76,7 @@ id tv_song_title
 id tv_total_time
 id urlEditText
 id userEditText
+layout activity_album_detail
 layout activity_details
 layout activity_login
 layout activity_main

@@ -3923,6 +3923,7 @@ id actions
 id activated
 id activity_chooser_view_content
 id add
+id album_detail_container
 id alertTitle
 id aligned
 id all
@@ -4769,6 +4770,7 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout activity_album_detail
 layout activity_details
 layout activity_login
 layout activity_main

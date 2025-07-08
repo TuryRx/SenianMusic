@@ -3922,6 +3922,7 @@ int id actions 0x7f0b004e
 int id activated 0x7f0b004f
 int id activity_chooser_view_content 0x7f0b0050
 int id add 0x7f0b0051
+int id album_detail_container 0x7f0b0309
 int id alertTitle 0x7f0b0052
 int id aligned 0x7f0b0053
 int id all 0x7f0b0054
@@ -4768,6 +4769,7 @@ int layout abc_search_dropdown_item_icons_2line 0x7f0e0018
 int layout abc_search_view 0x7f0e0019
 int layout abc_select_dialog_material 0x7f0e001a
 int layout abc_tooltip 0x7f0e001b
+int layout activity_album_detail 0x7f0e00c2
 int layout activity_details 0x7f0e001c
 int layout activity_login 0x7f0e001d
 int layout activity_main 0x7f0e001e

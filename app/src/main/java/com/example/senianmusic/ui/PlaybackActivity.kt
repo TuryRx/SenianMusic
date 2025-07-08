@@ -3,6 +3,7 @@ package com.example.senianmusic.ui.playback
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
@@ -12,8 +13,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.example.senianmusic.R
+import com.example.senianmusic.data.local.AppDatabase
 import com.example.senianmusic.data.local.SettingsRepository
+import com.example.senianmusic.data.remote.RetrofitClient
+import com.example.senianmusic.data.remote.model.Album
 import com.example.senianmusic.data.remote.model.Song
+import com.example.senianmusic.data.repository.MusicRepository
 import com.example.senianmusic.databinding.ActivityPlaybackBinding
 import com.example.senianmusic.player.MusicPlayer
 import com.example.senianmusic.player.PlayerStatus
@@ -47,7 +52,6 @@ class PlaybackActivity : FragmentActivity() {
         settingsRepository = SettingsRepository(applicationContext)
         player = MusicPlayer.getInstance(this)
 
-        // Obtenemos la canción actual del estado global
         val currentSong = PlayerStatus.currentSong
         if (currentSong == null) {
             Toast.makeText(this, "Error: No hay canción en reproducción.", Toast.LENGTH_SHORT).show()
@@ -55,27 +59,15 @@ class PlaybackActivity : FragmentActivity() {
             return
         }
 
-        // --- LÓGICA SIMPLIFICADA Y CORRECTA ---
-        // La música ya fue iniciada por MainFragment o los botones de la barra.
-        // La única tarea de onCreate es SINCRONIZAR la interfaz gráfica.
-        // NO llamamos a playSong() aquí.
-
-        // 1. Actualiza la información visual de la canción (título, carátula, etc.)
         updateUiWithSongData(currentSong)
-
-        // 2. Actualiza los controles (el botón de play/pausa y la duración total)
         updateUiFromPlayerState()
-
-        // 3. Si la música está sonando, empezamos a actualizar la barra de progreso
         if (PlayerStatus.isPlaying) {
             handler.post(uiUpdateRunnable)
         }
 
-        // 4. Configuramos los listeners de los botones y la seekbar como siempre
         setupButtonListeners()
         setupSeekBarListener()
     }
-
 
     override fun onStart() {
         super.onStart()
@@ -86,30 +78,6 @@ class PlaybackActivity : FragmentActivity() {
         super.onStop()
         playerListener?.let { player?.removeListener(it) }
         handler.removeCallbacks(uiUpdateRunnable)
-    }
-
-    private fun initializeStateAndUi() {
-        val isFirstLaunch = PlayerStatus.playlist.isEmpty()
-
-        if (isFirstLaunch) {
-            // Solo poblamos el estado la primera vez que se entra.
-            val playlistFromIntent = intent.getParcelableArrayListExtra<Song>("PLAYLIST") ?: arrayListOf()
-            val startIndex = intent.getIntExtra("CURRENT_SONG_INDEX", -1)
-            if (playlistFromIntent.isNotEmpty() && startIndex != -1) {
-                PlayerStatus.setPlaylist(playlistFromIntent, startIndex)
-                // Y solo llamamos a playSong para iniciar el audio la primera vez.
-                PlayerStatus.currentSong?.let { playSong(it) } ?: finishWithError()
-            } else {
-                finishWithError()
-            }
-        } else {
-            // Si la actividad se está recreando (o abriendo de nuevo), la música ya debería estar sonando.
-            // SOLO sincronizamos la UI con el estado actual, NO reiniciamos la canción.
-            PlayerStatus.currentSong?.let {
-                updateUiWithSongData(it)
-                updateUiFromPlayerState() // Asegura que el botón play/pause y la seekbar estén correctos
-            } ?: finishWithError()
-        }
     }
 
     private fun finishWithError() {
@@ -151,6 +119,7 @@ class PlaybackActivity : FragmentActivity() {
         binding.btnForward10.setOnClickListener { player?.let { it.seekTo(it.currentPosition + 10000) } }
     }
 
+    // --- SETUP PLAYER LISTENER ACTUALIZADO ---
     private fun setupPlayerListener() {
         playerListener = object : Player.Listener {
             override fun onIsPlayingChanged(isPlaying: Boolean) {
@@ -158,15 +127,59 @@ class PlaybackActivity : FragmentActivity() {
                 updateUiFromPlayerState()
                 if (isPlaying) handler.post(uiUpdateRunnable) else handler.removeCallbacks(uiUpdateRunnable)
             }
+
             override fun onPlaybackStateChanged(playbackState: Int) {
                 updateUiFromPlayerState()
                 if (playbackState == Player.STATE_ENDED) {
-                    playNextSong()
+                    // Primero, comprobamos si hay una siguiente canción en la playlist actual
+                    if (PlayerStatus.hasNextSong()) {
+                        Log.d("PlaybackActivity", "Reproduciendo siguiente canción de la playlist.")
+                        playNextSong()
+                    }
+                    // Si no, comprobamos si estamos en una lista de reproducción de álbumes
+                    else if (PlayerStatus.albumPlaylist.isNotEmpty()) {
+                        val nextAlbumIndex = PlayerStatus.currentAlbumIndex + 1
+                        if (nextAlbumIndex < PlayerStatus.albumPlaylist.size) {
+                            Log.d("PlaybackActivity", "Fin de álbum, cargando el siguiente.")
+                            val nextAlbum = PlayerStatus.albumPlaylist[nextAlbumIndex]
+                            playNextAlbum(nextAlbum, nextAlbumIndex)
+                        } else {
+                            // Se acabaron todos los álbumes
+                            Log.d("PlaybackActivity", "Fin de la lista de álbumes.")
+                            Toast.makeText(applicationContext, "Fin de la lista de reproducción", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    // Si no se cumple ninguna condición, la música simplemente se detendrá.
                 }
             }
         }
         player?.addListener(playerListener!!)
         updateUiFromPlayerState()
+    }
+
+    // --- NUEVA FUNCIÓN PARA REPRODUCIR EL SIGUIENTE ÁLBUM ---
+    private fun playNextAlbum(album: Album, albumIndex: Int) {
+        Toast.makeText(this, "Cargando siguiente álbum: ${album.name}", Toast.LENGTH_SHORT).show()
+        lifecycleScope.launch {
+            // Esta es una forma simplificada de obtener el repositorio.
+            // En una app más grande, se usaría inyección de dependencias (Hilt/Koin).
+            val repository = MusicRepository(
+                applicationContext,
+                AppDatabase.getDatabase(applicationContext).songDao(),
+                SettingsRepository(applicationContext),
+                RetrofitClient.getApiService()
+            )
+            val songs = repository.fetchAlbumDetails(album.id)
+            if (songs.isNotEmpty()) {
+                // Actualizamos el estado global con el nuevo álbum y su lista de canciones
+                PlayerStatus.setAlbumPlaylist(PlayerStatus.albumPlaylist, albumIndex, songs, 0)
+                // Reproducimos la primera canción del nuevo álbum
+                playSong(songs[0])
+            } else {
+                Log.e("PlaybackActivity", "El siguiente álbum '${album.name}' no tiene canciones.")
+                // Opcional: intentar saltar al siguiente álbum si este está vacío.
+            }
+        }
     }
 
     private fun updateUiFromPlayerState() {

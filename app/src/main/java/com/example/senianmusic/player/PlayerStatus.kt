@@ -2,28 +2,30 @@ package com.example.senianmusic.player
 
 import android.os.Handler
 import android.os.Looper
+import com.example.senianmusic.data.remote.model.Album // ¡Importación necesaria!
 import com.example.senianmusic.data.remote.model.Song
 
-/**
- * Objeto Singleton que actúa como una fuente de verdad global y robusta
- * para el estado actual de la sesión de reproducción.
- */
 object PlayerStatus {
-    // --- ESTADO COMPLETO DE LA REPRODUCCIÓN ---
+    // --- ESTADO DE CANCIÓN ACTUAL ---
     var currentSong: Song? = null
     var isPlaying: Boolean = false
     var currentPosition: Long = 0
     var totalDuration: Long = 0
-    var playlist: List<Song> = emptyList() // <-- AHORA ES LA FUENTE DE VERDAD
-    var currentSongIndex: Int = -1         // <-- AHORA ES LA FUENTE DE VERDAD
+    var playlist: List<Song> = emptyList()
+    var currentSongIndex: Int = -1
+
+    // --- NUEVO: ESTADO DE LA PLAYLIST DE ÁLBUMES ---
+    var albumPlaylist: List<Album> = emptyList()
+        private set
+    var currentAlbumIndex: Int = -1
+        private set
+    // --- FIN NUEVO ---
 
     private val listeners = mutableListOf<() -> Unit>()
     private val handler = Handler(Looper.getMainLooper())
 
     fun addListener(listener: () -> Unit) {
-        if (!listeners.contains(listener)) {
-            listeners.add(listener)
-        }
+        if (!listeners.contains(listener)) listeners.add(listener)
     }
 
     fun removeListener(listener: () -> Unit) {
@@ -36,16 +38,30 @@ object PlayerStatus {
 
     // --- MÉTODOS DE CONTROL DE ESTADO ---
 
-    // Inicia una nueva sesión de reproducción. A ser llamado desde MainFragment.
     fun setPlaylist(newPlaylist: List<Song>, startIndex: Int) {
+        // Al establecer una playlist de canciones normal, limpiamos el estado de los álbumes.
+        clearAlbumPlaylist()
         this.playlist = newPlaylist
         this.currentSongIndex = startIndex
         this.currentSong = playlist.getOrNull(startIndex)
-        this.isPlaying = true // Asumimos que la reproducción comienza inmediatamente
+        this.isPlaying = true
         notifyListeners()
     }
 
-    // Cambia a la siguiente canción y actualiza el estado
+    // --- NUEVA FUNCIÓN PARA ESTABLECER PLAYLIST DE ÁLBUMES ---
+    fun setAlbumPlaylist(albums: List<Album>, albumIndex: Int, songsOfFirstAlbum: List<Song>, songIndex: Int) {
+        this.albumPlaylist = albums
+        this.currentAlbumIndex = albumIndex
+
+        // El resto es igual que setPlaylist, pero sin limpiar el estado del álbum
+        this.playlist = songsOfFirstAlbum
+        this.currentSongIndex = songIndex
+        this.currentSong = playlist.getOrNull(songIndex)
+        this.isPlaying = true
+        notifyListeners()
+    }
+    // --- FIN NUEVO ---
+
     fun playNext() {
         if (playlist.isEmpty()) return
         currentSongIndex = (currentSongIndex + 1) % playlist.size
@@ -54,7 +70,6 @@ object PlayerStatus {
         notifyListeners()
     }
 
-    // Cambia a la canción anterior y actualiza el estado
     fun playPrevious() {
         if (playlist.isEmpty()) return
         currentSongIndex = if (currentSongIndex > 0) currentSongIndex - 1 else playlist.size - 1
@@ -63,13 +78,17 @@ object PlayerStatus {
         notifyListeners()
     }
 
-    // Actualiza solo el estado de reproducción (play/pausa)
+    // --- NUEVA FUNCIÓN DE AYUDA ---
+    fun hasNextSong(): Boolean {
+        return playlist.isNotEmpty() && currentSongIndex < playlist.size - 1
+    }
+    // --- FIN NUEVO ---
+
     fun updateIsPlaying(isPlaying: Boolean) {
         this.isPlaying = isPlaying
         notifyListeners()
     }
 
-    // Actualiza solo el progreso. No notifica para no sobrecargar la UI.
     fun updateProgress(position: Long, duration: Long) {
         if (duration > 0) {
             this.currentPosition = position
@@ -77,8 +96,15 @@ object PlayerStatus {
         }
     }
 
-    // Limpia todo el estado cuando la sesión de reproducción termina.
+    // --- NUEVA FUNCIÓN PARA LIMPIAR ESTADO DE ÁLBUMES ---
+    private fun clearAlbumPlaylist() {
+        this.albumPlaylist = emptyList()
+        this.currentAlbumIndex = -1
+    }
+    // --- FIN NUEVO ---
+
     fun clear() {
+        clearAlbumPlaylist() // Nos aseguramos de limpiar también los álbumes
         currentSong = null
         isPlaying = false
         currentPosition = 0

@@ -12,6 +12,8 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
+import com.example.senianmusic.data.remote.model.Album
+
 
 class MusicRepository(
     val context: Context,
@@ -171,6 +173,50 @@ class MusicRepository(
             }
         } catch (e: Exception) {
             Log.e("MusicRepository", "Excepción al buscar canciones", e)
+            emptyList()
+        }
+    }
+
+    suspend fun fetchAlbumList(type: String): List<Album> {
+        return try {
+            val session = getSession() ?: return emptyList()
+            val response = apiService.getAlbumList2(
+                user = session.user,
+                token = session.token,
+                salt = session.salt,
+                type = type, // "newest" o "recent"
+                size = 20
+            )
+            if (response.isSuccessful) {
+                val albums = response.body()?.subsonicResponse?.albumList?.albumList ?: emptyList()
+                // Construimos la URL de la carátula para cada álbum
+                albums.forEach { album ->
+                    album.coverArtUrl = album.buildCoverArtUrlForAlbum(session.baseUrl, session.user, session.token, session.salt)
+                }
+                albums
+            } else {
+                emptyList()
+            }
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
+
+    // Y necesitamos una función para obtener los detalles de un solo álbum
+    suspend fun fetchAlbumDetails(albumId: String): List<Song> {
+        return try {
+            val session = getSession() ?: return emptyList()
+            val response = apiService.getAlbum(session.user, session.token, session.salt, albumId)
+            if (response.isSuccessful) {
+                val songs = response.body()?.subsonicResponse?.album?.songList ?: emptyList()
+                songs.forEach { song ->
+                    song.coverArtUrl = song.buildCoverArtUrl(session.baseUrl, session.user, session.token, session.salt)
+                }
+                songs
+            } else {
+                emptyList()
+            }
+        } catch(e: Exception) {
             emptyList()
         }
     }

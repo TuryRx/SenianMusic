@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    //id("kotlin-kapt")
+    id("kotlin-kapt")
     alias(libs.plugins.ksp)                 // Usa el alias que creaste
     id("kotlin-parcelize")
 
