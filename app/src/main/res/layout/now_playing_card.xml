@@ -7,9 +7,7 @@
     android:layout_height="72dp"
     android:background="@android:color/transparent"
     android:descendantFocusability="afterDescendants"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:nextFocusUp="@id/main_browse_fragment"> <!-- CRÍTICO: Si presionas ARRIBA, el foco vuelve al fragmento principal -->
+    android:nextFocusUp="@id/main_browse_fragment">
 
     <!-- Barra de progreso (no necesita foco) -->
     <ProgressBar
@@ -23,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:progress="50" />
 
-    <!-- Flecha (ahora es focusable) -->
+    <!-- Flecha para expandir -->
     <ImageView
         android:id="@+id/iv_expand_arrow"
         android:layout_width="48dp"
@@ -39,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@id/now_playing_progress"
         app:tint="@android:color/white" />
 
-    <!-- Carátula (ahora es focusable) -->
+    <!-- Carátula -->
     <ImageView
         android:id="@+id/iv_now_playing_cover"
         android:layout_width="56dp"
@@ -87,7 +85,7 @@
             tools:text="Nombre del Artista" />
     </LinearLayout>
 
-    <!-- Botón Corazón con navegación definida -->
+    <!-- Botón Favorite -->
     <ImageButton
         android:id="@+id/btn_favorite"
         android:layout_width="48dp"
@@ -102,7 +100,7 @@
         app:layout_constraintTop_toBottomOf="@id/now_playing_progress"
         app:tint="@android:color/white" />
 
-    <!-- Botón Next con navegación definida -->
+    <!-- Botón Next -->
     <ImageButton
         android:id="@+id/btn_next"
         android:layout_width="48dp"
@@ -118,7 +116,7 @@
         app:layout_constraintTop_toBottomOf="@id/now_playing_progress"
         app:tint="@android:color/white" />
 
-    <!-- Botón Play/Pause con navegación definida -->
+    <!-- Botón Play/Pause -->
     <ImageButton
         android:id="@+id/btn_play_pause"
         android:layout_width="48dp"
@@ -134,7 +132,7 @@
         app:layout_constraintTop_toBottomOf="@id/now_playing_progress"
         app:tint="@android:color/white" />
 
-    <!-- Botón Previous con navegación definida -->
+    <!-- Botón Previous -->
     <ImageButton
         android:id="@+id/btn_previous"
         android:layout_width="48dp"

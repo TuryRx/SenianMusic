@@ -32,12 +32,12 @@
         "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/mipmap-mdpi/ic_launcher_foreground.webp"
     },
     {
-        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-debug-51:/layout_activity_details.xml.flat",
-        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/layout/activity_details.xml"
-    },
-    {
         "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-debug-51:/drawable_movie.png.flat",
         "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/drawable/movie.png"
+    },
+    {
+        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-debug-51:/layout_activity_details.xml.flat",
+        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/layout/activity_details.xml"
     },
     {
         "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-debug-51:/layout_activity_playback.xml.flat",
@@ -76,12 +76,12 @@
         "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/mipmap-xxhdpi/ic_launcher_foreground.webp"
     },
     {
-        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-debug-51:/mipmap-xxhdpi_ic_launcher.webp.flat",
-        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/mipmap-xxhdpi/ic_launcher.webp"
-    },
-    {
         "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-debug-51:/mipmap-xhdpi_ic_launcher_round.webp.flat",
         "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/mipmap-xhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-debug-51:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/mipmap-xxhdpi/ic_launcher.webp"
     },
     {
         "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-debug-51:/drawable_ic_favorite_border.xml.flat",

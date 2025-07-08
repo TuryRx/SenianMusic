@@ -4,6 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+// --- NUEVO --- Importaciones necesarias para la lógica del foco
+import android.view.KeyEvent
+import androidx.leanback.app.BrowseSupportFragment
+import androidx.leanback.widget.ArrayObjectAdapter
+// --- FIN NUEVO ---
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
@@ -20,7 +25,6 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.senianmusic.data.local.SettingsRepository
-import com.example.senianmusic.data.remote.model.Song
 import com.example.senianmusic.player.MusicPlayer
 import com.example.senianmusic.player.PlayerStatus
 import com.example.senianmusic.ui.MainFragment
@@ -70,6 +74,37 @@ class MainActivity : FragmentActivity() {
         }
     }
 
+    // --- NUEVO: MÉTODO onKeyDown PARA MANEJAR EL FOCO DEL D-PAD ---
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        // Solo nos interesa el evento de presionar la flecha "Abajo"
+        if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+            val fragment = supportFragmentManager.findFragmentById(R.id.main_browse_fragment)
+
+            // Verificamos que sea nuestro fragmento y que la barra de reproducción esté visible
+            if (fragment is BrowseSupportFragment && playerBarContainer.visibility == View.VISIBLE) {
+
+                val rowsAdapter = fragment.adapter as? ArrayObjectAdapter
+                if (rowsAdapter != null && rowsAdapter.size() > 0) {
+
+                    // Verificamos si la fila actualmente seleccionada es la ÚLTIMA
+                    if (fragment.selectedPosition == rowsAdapter.size() - 1) {
+
+                        // Si es así, movemos el foco al botón de Play/Pause
+                        playerBarContainer.findViewById<ImageButton>(R.id.btn_play_pause)?.requestFocus()
+
+                        // Devolvemos 'true' para indicar que hemos manejado el evento.
+                        return true
+                    }
+                }
+            }
+        }
+
+        // Para cualquier otra tecla o caso, dejamos que el sistema actúe normalmente
+        return super.onKeyDown(keyCode, event)
+    }
+    // --- FIN NUEVO ---
+
+
     override fun onResume() {
         super.onResume()
         PlayerStatus.addListener(playerStatusListener)
@@ -81,6 +116,8 @@ class MainActivity : FragmentActivity() {
         PlayerStatus.removeListener(playerStatusListener)
         progressHandler.removeCallbacks(progressUpdater)
     }
+
+
 
     override fun onDestroy() {
         super.onDestroy()
@@ -136,22 +173,30 @@ class MainActivity : FragmentActivity() {
         startActivity(Intent(this, PlaybackActivity::class.java))
     }
 
+    // --- MODIFICACIÓN LIGERA PARA MEJORAR LA ROBUSTEZ DEL FOCO ---
     private fun showPlayerBarAnimated() {
-        // Si la barra ya está visible, no hacemos nada.
+        // Guardamos el elemento que tiene el foco actualmente en el fragmento principal.
+        val currentFocus = currentFocus
+
         if (playerBarContainer.visibility == View.VISIBLE) return
 
         val slideIn = AnimationUtils.loadAnimation(this, R.anim.slide_in_from_bottom)
         slideIn.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation?) {
-                // Hacemos visible la barra JUSTO ANTES de que empiece la animación
                 playerBarContainer.visibility = View.VISIBLE
             }
+
             override fun onAnimationEnd(animation: Animation?) {
-                // --- ¡LA MAGIA OCURRE AQUÍ! ---
-                // Cuando la animación termina, le pedimos al botón de Play/Pause que tome el foco.
-                val playPauseButton = playerBarContainer.findViewById<ImageButton>(R.id.btn_play_pause)
-                playPauseButton.requestFocus()
+                // Si el foco sigue en el fragmento principal (y no se ha movido por otra razón),
+                // no forzamos el foco a la barra, dejamos que onKeyDown haga su trabajo.
+                // Esto evita un comportamiento errático si el usuario es muy rápido.
+                // Sin embargo, si el foco se perdió, lo ponemos en play/pause como respaldo.
+                val mainFragmentView = findViewById<View>(R.id.main_browse_fragment)
+                if (currentFocus == null || !mainFragmentView.hasFocus()) {
+                    playerBarContainer.findViewById<ImageButton>(R.id.btn_play_pause)?.requestFocus()
+                }
             }
+
             override fun onAnimationRepeat(animation: Animation?) {}
         })
         playerBarContainer.startAnimation(slideIn)
@@ -173,7 +218,14 @@ class MainActivity : FragmentActivity() {
     private fun updatePlayerBar() {
         val song = PlayerStatus.currentSong
         if (song != null) {
-            showPlayerBarAnimated()
+            // Ya no llamamos a showPlayerBarAnimated() directamente desde aquí.
+            // Dejaremos que onKeyDown se encargue del foco al bajar.
+            // Solo nos aseguramos de que la barra sea visible si no lo está.
+            if (playerBarContainer.visibility != View.VISIBLE) {
+                showPlayerBarAnimated()
+            }
+
+            // El resto de la lógica de actualización de la UI
             val songInfoLayout = playerBarContainer.findViewById<LinearLayout>(R.id.ll_song_info)
             val titleView = songInfoLayout.findViewById<TextView>(R.id.tv_now_playing_title)
             val artistView = songInfoLayout.findViewById<TextView>(R.id.tv_now_playing_artist)
@@ -187,17 +239,8 @@ class MainActivity : FragmentActivity() {
             val newIconRes = if (PlayerStatus.isPlaying) R.drawable.ic_pause_circle else R.drawable.ic_play_circle
             if (playPauseBtn.tag != newIconRes) {
                 playPauseBtn.tag = newIconRes
-                val fadeOut = AlphaAnimation(1.0f, 0.0f).apply { duration = 150 }
-                fadeOut.setAnimationListener(object : Animation.AnimationListener {
-                    override fun onAnimationStart(animation: Animation?) {}
-                    override fun onAnimationRepeat(animation: Animation?) {}
-                    override fun onAnimationEnd(animation: Animation?) {
-                        playPauseBtn.setImageResource(newIconRes)
-                        val fadeIn = AlphaAnimation(0.0f, 1.0f).apply { duration = 150 }
-                        playPauseBtn.startAnimation(fadeIn)
-                    }
-                })
-                playPauseBtn.startAnimation(fadeOut)
+                // He simplificado la animación del botón para evitar posibles conflictos
+                playPauseBtn.setImageResource(newIconRes)
             }
 
             if (PlayerStatus.totalDuration > 0) {
