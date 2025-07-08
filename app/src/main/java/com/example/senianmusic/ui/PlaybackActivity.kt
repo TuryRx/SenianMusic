@@ -3,7 +3,6 @@ package com.example.senianmusic.ui.playback
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
@@ -17,6 +16,7 @@ import com.example.senianmusic.data.local.SettingsRepository
 import com.example.senianmusic.data.remote.model.Song
 import com.example.senianmusic.databinding.ActivityPlaybackBinding
 import com.example.senianmusic.player.MusicPlayer
+import com.example.senianmusic.player.PlayerStatus
 import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -31,10 +31,6 @@ class PlaybackActivity : FragmentActivity() {
     private var player: Player? = null
     private var playerListener: Player.Listener? = null
     private val handler = Handler(Looper.getMainLooper())
-
-    // --- PROPIEDADES DE LA PLAYLIST RESTAURADAS ---
-    private var playlist: ArrayList<Song> = ArrayList()
-    private var currentSongIndex: Int = -1
 
     private val uiUpdateRunnable: Runnable = object : Runnable {
         override fun run() {
@@ -51,7 +47,7 @@ class PlaybackActivity : FragmentActivity() {
         settingsRepository = SettingsRepository(applicationContext)
         player = MusicPlayer.getInstance(this)
 
-        loadPlaylistAndPlay() // Cambiamos el nombre para que sea más claro
+        initializeStateAndUi()
         setupButtonListeners()
         setupSeekBarListener()
     }
@@ -67,19 +63,33 @@ class PlaybackActivity : FragmentActivity() {
         handler.removeCallbacks(uiUpdateRunnable)
     }
 
-    private fun loadPlaylistAndPlay() {
-        // Recibimos la lista y el índice del Intent (como lo envía MainFragment)
-        playlist = intent.getParcelableArrayListExtra("PLAYLIST") ?: arrayListOf()
-        currentSongIndex = intent.getIntExtra("CURRENT_SONG_INDEX", -1)
+    private fun initializeStateAndUi() {
+        val isFirstLaunch = PlayerStatus.playlist.isEmpty()
 
-        if (currentSongIndex != -1 && playlist.isNotEmpty()) {
-            val songToPlay = playlist[currentSongIndex]
-            playSong(songToPlay)
+        if (isFirstLaunch) {
+            // Solo poblamos el estado la primera vez que se entra.
+            val playlistFromIntent = intent.getParcelableArrayListExtra<Song>("PLAYLIST") ?: arrayListOf()
+            val startIndex = intent.getIntExtra("CURRENT_SONG_INDEX", -1)
+            if (playlistFromIntent.isNotEmpty() && startIndex != -1) {
+                PlayerStatus.setPlaylist(playlistFromIntent, startIndex)
+                // Y solo llamamos a playSong para iniciar el audio la primera vez.
+                PlayerStatus.currentSong?.let { playSong(it) } ?: finishWithError()
+            } else {
+                finishWithError()
+            }
         } else {
-            Log.e("PlaybackActivity", "No se recibió una playlist o un índice válido.")
-            Toast.makeText(this, "Error al cargar la canción.", Toast.LENGTH_SHORT).show()
-            finish()
+            // Si la actividad se está recreando (o abriendo de nuevo), la música ya debería estar sonando.
+            // SOLO sincronizamos la UI con el estado actual, NO reiniciamos la canción.
+            PlayerStatus.currentSong?.let {
+                updateUiWithSongData(it)
+                updateUiFromPlayerState() // Asegura que el botón play/pause y la seekbar estén correctos
+            } ?: finishWithError()
         }
+    }
+
+    private fun finishWithError() {
+        Toast.makeText(this, "Error al cargar la canción.", Toast.LENGTH_SHORT).show()
+        finish()
     }
 
     private fun playSong(song: Song) {
@@ -87,15 +97,82 @@ class PlaybackActivity : FragmentActivity() {
         lifecycleScope.launch(Dispatchers.IO) {
             val streamUrl = getStreamUrlForSong(song)
             if (streamUrl != null) {
-                withContext(Dispatchers.Main) {
-                    MusicPlayer.play(applicationContext, streamUrl)
-                }
+                withContext(Dispatchers.Main) { MusicPlayer.play(applicationContext, streamUrl) }
             } else {
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(applicationContext, "No se pudo obtener la URL para reproducir", Toast.LENGTH_LONG).show()
+                withContext(Dispatchers.Main) { Toast.makeText(applicationContext, "No se pudo obtener la URL para reproducir.", Toast.LENGTH_LONG).show() }
+            }
+        }
+    }
+
+    private fun playNextSong() {
+        PlayerStatus.playNext()
+        PlayerStatus.currentSong?.let { playSong(it) }
+    }
+
+    private fun playPreviousSong() {
+        PlayerStatus.playPrevious()
+        PlayerStatus.currentSong?.let { playSong(it) }
+    }
+
+    private fun setupButtonListeners() {
+        binding.btnPlayPause.setOnClickListener {
+            val willBePlaying = !PlayerStatus.isPlaying
+            PlayerStatus.updateIsPlaying(willBePlaying)
+            if (willBePlaying) MusicPlayer.resume() else MusicPlayer.pause()
+        }
+        binding.btnNext.setOnClickListener { playNextSong() }
+        binding.btnPrevious.setOnClickListener { playPreviousSong() }
+        binding.btnReplay10.setOnClickListener { player?.let { it.seekTo(it.currentPosition - 10000) } }
+        binding.btnForward10.setOnClickListener { player?.let { it.seekTo(it.currentPosition + 10000) } }
+    }
+
+    private fun setupPlayerListener() {
+        playerListener = object : Player.Listener {
+            override fun onIsPlayingChanged(isPlaying: Boolean) {
+                PlayerStatus.updateIsPlaying(isPlaying)
+                updateUiFromPlayerState()
+                if (isPlaying) handler.post(uiUpdateRunnable) else handler.removeCallbacks(uiUpdateRunnable)
+            }
+            override fun onPlaybackStateChanged(playbackState: Int) {
+                updateUiFromPlayerState()
+                if (playbackState == Player.STATE_ENDED) {
+                    playNextSong()
                 }
             }
         }
+        player?.addListener(playerListener!!)
+        updateUiFromPlayerState()
+    }
+
+    private fun updateUiFromPlayerState() {
+        player?.let {
+            if (it.duration > 0) {
+                binding.tvTotalTime.text = formatDuration(it.duration)
+                binding.seekBar.max = it.duration.toInt()
+            }
+            updateSeekBar()
+            binding.btnPlayPause.setImageResource(
+                if (PlayerStatus.isPlaying) R.drawable.ic_pause_circle else R.drawable.ic_play_circle
+            )
+        }
+    }
+
+    private fun updateSeekBar() {
+        player?.let {
+            PlayerStatus.updateProgress(it.currentPosition, it.duration)
+            binding.seekBar.progress = it.currentPosition.toInt()
+            binding.tvCurrentTime.text = formatDuration(it.currentPosition)
+        }
+    }
+
+    private fun setupSeekBarListener() {
+        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (fromUser) player?.seekTo(progress.toLong())
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) { handler.removeCallbacks(uiUpdateRunnable) }
+            override fun onStopTrackingTouch(seekBar: SeekBar?) { handler.post(uiUpdateRunnable) }
+        })
     }
 
     private fun updateUiWithSongData(song: Song) {
@@ -137,83 +214,6 @@ class PlaybackActivity : FragmentActivity() {
     }
 
     private data class SessionData(val baseUrl: String, val user: String, val token: String, val salt: String)
-
-    private fun setupButtonListeners() {
-        binding.btnPlayPause.setOnClickListener {
-            if (player?.isPlaying == true) MusicPlayer.pause() else MusicPlayer.resume()
-        }
-        binding.btnNext.setOnClickListener { playNextSong() }
-        binding.btnPrevious.setOnClickListener { playPreviousSong() }
-
-        binding.btnReplay10.setOnClickListener {
-            player?.let { it.seekTo(it.currentPosition - 10000) } // Retrocede 10 segundos
-        }
-        binding.btnForward10.setOnClickListener {
-            player?.let { it.seekTo(it.currentPosition + 10000) } // Adelanta 10 segundos
-        }
-    }
-
-    private fun playNextSong() {
-        if (playlist.isEmpty()) return
-        currentSongIndex = (currentSongIndex + 1) % playlist.size // Lógica circular
-        playSong(playlist[currentSongIndex])
-    }
-
-    private fun playPreviousSong() {
-        if (playlist.isEmpty()) return
-        currentSongIndex = if (currentSongIndex > 0) currentSongIndex - 1 else playlist.size - 1 // Lógica circular
-        playSong(playlist[currentSongIndex])
-    }
-
-    private fun setupPlayerListener() {
-        playerListener = object : Player.Listener {
-            override fun onIsPlayingChanged(isPlaying: Boolean) {
-                updateUiFromPlayerState()
-                if (isPlaying) handler.post(uiUpdateRunnable) else handler.removeCallbacks(uiUpdateRunnable)
-            }
-            override fun onPlaybackStateChanged(playbackState: Int) {
-                updateUiFromPlayerState()
-                if (playbackState == Player.STATE_ENDED) {
-                    // Cuando una canción termina, pasa a la siguiente automáticamente.
-                    playNextSong()
-                }
-            }
-        }
-        player?.addListener(playerListener!!)
-        updateUiFromPlayerState()
-    }
-
-    private fun updateUiFromPlayerState() {
-        player?.let {
-            if (it.duration > 0) {
-                binding.tvTotalTime.text = formatDuration(it.duration)
-                binding.seekBar.max = it.duration.toInt()
-            }
-            updateSeekBar()
-            // --- LÍNEA CORREGIDA ---
-            binding.btnPlayPause.setImageResource(
-                if (it.isPlaying) R.drawable.ic_pause_circle
-                else R.drawable.ic_play_circle
-            )
-        }
-    }
-
-    private fun updateSeekBar() {
-        player?.let {
-            binding.seekBar.progress = it.currentPosition.toInt()
-            binding.tvCurrentTime.text = formatDuration(it.currentPosition)
-        }
-    }
-
-    private fun setupSeekBarListener() {
-        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if (fromUser) player?.seekTo(progress.toLong())
-            }
-            override fun onStartTrackingTouch(seekBar: SeekBar?) { handler.removeCallbacks(uiUpdateRunnable) }
-            override fun onStopTrackingTouch(seekBar: SeekBar?) { handler.post(uiUpdateRunnable) }
-        })
-    }
 
     private fun formatDuration(duration: Long): String {
         val minutes = TimeUnit.MILLISECONDS.toMinutes(duration)

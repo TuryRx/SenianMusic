@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Este es el fondo de la barra de progreso (la parte "no cargada") -->
+    <item android:id="@android:id/background">
+        <shape>
+            <!-- Usamos un gris semitransparente -->
+            <solid android:color="#4DFFFFFF" />
+        </shape>
+    </item>
+
+    <!-- Este es el progreso activo (la parte que avanza) -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <!-- Usamos un color blanco sólido -->
+                <solid android:color="@android:color/white" />
+            </shape>
+        </clip>
+    </item>
+
+</layer-list>

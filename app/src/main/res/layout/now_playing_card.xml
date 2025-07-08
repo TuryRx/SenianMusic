@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:background="@android:color/transparent"
+    android:descendantFocusability="afterDescendants"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:nextFocusUp="@id/main_browse_fragment"> <!-- CRÍTICO: Si presionas ARRIBA, el foco vuelve al fragmento principal -->
+
+    <!-- Barra de progreso (no necesita foco) -->
+    <ProgressBar
+        android:id="@+id/now_playing_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:progressDrawable="@drawable/mini_player_progress_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:progress="50" />
+
+    <!-- Flecha (ahora es focusable) -->
+    <ImageView
+        android:id="@+id/iv_expand_arrow"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:padding="12dp"
+        android:src="@drawable/ic_keyboard_arrow_up"
+        android:background="@drawable/player_bar_button_background"
+        android:focusable="true"
+        android:nextFocusRight="@+id/iv_now_playing_cover"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/now_playing_progress"
+        app:tint="@android:color/white" />
+
+    <!-- Carátula (ahora es focusable) -->
+    <ImageView
+        android:id="@+id/iv_now_playing_cover"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="8dp"
+        android:scaleType="centerCrop"
+        android:background="@drawable/player_bar_button_background"
+        android:focusable="true"
+        android:nextFocusLeft="@+id/iv_expand_arrow"
+        android:nextFocusRight="@+id/btn_previous"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_expand_arrow"
+        app:layout_constraintTop_toBottomOf="@id/now_playing_progress"
+        tools:src="@drawable/movie" />
+
+    <!-- Info de la canción (no necesita foco) -->
+    <LinearLayout
+        android:id="@+id/ll_song_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_now_playing_cover"
+        app:layout_constraintEnd_toStartOf="@+id/btn_previous"
+        app:layout_constraintStart_toEndOf="@+id/iv_now_playing_cover"
+        app:layout_constraintTop_toTopOf="@+id/iv_now_playing_cover">
+        
+        <TextView
+            android:id="@+id/tv_now_playing_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            tools:text="Título Muy Largo de la Canción" />
+
+        <TextView
+            android:id="@+id/tv_now_playing_artist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@android:color/darker_gray"
+            tools:text="Nombre del Artista" />
+    </LinearLayout>
+
+    <!-- Botón Corazón con navegación definida -->
+    <ImageButton
+        android:id="@+id/btn_favorite"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/player_bar_button_background"
+        android:focusable="true"
+        android:src="@drawable/ic_favorite_border"
+        android:nextFocusLeft="@+id/btn_next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/now_playing_progress"
+        app:tint="@android:color/white" />
+
+    <!-- Botón Next con navegación definida -->
+    <ImageButton
+        android:id="@+id/btn_next"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/player_bar_button_background"
+        android:focusable="true"
+        android:src="@drawable/ic_skip_next"
+        android:nextFocusLeft="@+id/btn_play_pause"
+        android:nextFocusRight="@+id/btn_favorite"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_favorite"
+        app:layout_constraintTop_toBottomOf="@id/now_playing_progress"
+        app:tint="@android:color/white" />
+
+    <!-- Botón Play/Pause con navegación definida -->
+    <ImageButton
+        android:id="@+id/btn_play_pause"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/player_bar_button_background"
+        android:focusable="true"
+        android:src="@drawable/ic_play_circle"
+        android:nextFocusLeft="@+id/btn_previous"
+        android:nextFocusRight="@+id/btn_next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_next"
+        app:layout_constraintTop_toBottomOf="@id/now_playing_progress"
+        app:tint="@android:color/white" />
+
+    <!-- Botón Previous con navegación definida -->
+    <ImageButton
+        android:id="@+id/btn_previous"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/player_bar_button_background"
+        android:focusable="true"
+        android:src="@drawable/ic_skip_previous"
+        android:nextFocusLeft="@+id/iv_now_playing_cover"
+        android:nextFocusRight="@+id/btn_play_pause"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_play_pause"
+        app:layout_constraintTop_toBottomOf="@id/now_playing_progress"
+        app:tint="@android:color/white" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

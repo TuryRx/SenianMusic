@@ -8,6 +8,7 @@
     <color name="purple_500">#FF6200EE</color>
     <color name="search_opaque">#ffaa3f</color>
     <color name="selected_background">#ffaa3f</color>
+    <color name="white">#FFFFFFFF</color>
     <string name="app_name">SenianMusic</string>
     <string name="browse_title">Videos by Your Company</string>
     <string name="buy_1">Buy and Own</string>

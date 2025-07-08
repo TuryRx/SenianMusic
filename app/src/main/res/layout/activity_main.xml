@@ -1,6 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Este es el contenedor para el fragmento principal de Leanback -->
+<!--
+    Usamos un FrameLayout como base para poder superponer la barra
+    de reproducción sobre el contenido del fragmento.
+-->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main_browse_fragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!--
+        El contenedor para tu MainFragment (BrowseSupportFragment).
+        Lo dejamos como estaba en tu código original.
+    -->
+    <FrameLayout
+        android:id="@+id/main_browse_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!--
+        ¡NUEVO! Este es el contenedor de nuestra barra de reproducción.
+        - layout_gravity="bottom": Lo fija en la parte inferior.
+        - elevation="16dp": Asegura que se dibuje por encima del fragmento.
+        - visibility="gone": Empieza oculto y lo mostraremos con código.
+    -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottom_player_bar_container"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_gravity="bottom"
+        android:background="#DD212121"
+        android:elevation="16dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <!--
+            Aquí incluimos el diseño de la barra (now_playing_card.xml)
+            que te proporcioné en la respuesta anterior.
+        -->
+        <include layout="@layout/now_playing_card" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

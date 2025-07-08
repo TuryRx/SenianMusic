@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Usamos CardView para darle elevación y un fondo claro.
+     Focusable = true hace que todo el CardView sea seleccionable. -->
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/now_playing_card"
+    android:layout_width="320dp"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="#33FFFFFF"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Barra de progreso fina en la parte inferior -->
+        <ProgressBar
+            android:id="@+id/indicator_progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="3dp"
+            android:indeterminate="false"
+            android:progressDrawable="@drawable/mini_player_progress_bar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:progress="60" />
+
+        <ImageView
+            android:id="@+id/iv_indicator_cover"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_margin="8dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toTopOf="@id/indicator_progress"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/movie" />
+
+        <LinearLayout
+            android:id="@+id/ll_indicator_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_indicator_cover"
+            app:layout_constraintEnd_toStartOf="@+id/btn_indicator_play_pause"
+            app:layout_constraintStart_toEndOf="@+id/iv_indicator_cover"
+            app:layout_constraintTop_toTopOf="@+id/iv_indicator_cover">
+
+            <TextView
+                android:id="@+id/tv_indicator_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                tools:text="Título de la Canción" />
+
+            <TextView
+                android:id="@+id/tv_indicator_artist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="12sp"
+                tools:text="Nombre del Artista" />
+        </LinearLayout>
+
+        <!-- El botón debe ser focusable para poder controlarlo por separado -->
+        <ImageButton
+            android:id="@+id/btn_indicator_play_pause"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:src="@drawable/ic_play_circle"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_indicator_cover"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_indicator_cover"
+            app:tint="@color/white" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

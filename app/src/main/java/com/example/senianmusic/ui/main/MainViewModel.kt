@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.senianmusic.data.remote.model.Artist
 import com.example.senianmusic.data.remote.model.Song
 import com.example.senianmusic.data.repository.MusicRepository
-import com.example.senianmusic.player.MusicPlayer // <-- IMPORTAMOS NUESTRO REPRODUCTOR
+import com.example.senianmusic.player.MusicPlayer
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
@@ -29,11 +29,10 @@ class MainViewModel(private val musicRepository: MusicRepository) : ViewModel() 
         }
     }
 
-    // --- FUNCIÓN NUEVA Y MEJORADA ---
+    // Tu función playSong existente se queda como está.
     fun playSong(song: Song) {
         viewModelScope.launch {
             try {
-                // Obtenemos los datos de sesión guardados para construir la URL de streaming
                 val baseUrl = musicRepository.settingsRepository.serverUrlFlow.first()
                 val user = musicRepository.settingsRepository.usernameFlow.first()
                 val token = musicRepository.settingsRepository.tokenFlow.first()
@@ -42,9 +41,6 @@ class MainViewModel(private val musicRepository: MusicRepository) : ViewModel() 
                 if (baseUrl != null && user != null && token != null && salt != null) {
                     val streamUrl = song.getStreamUrl(baseUrl, user, token, salt)
                     Log.d("MainViewModel", "Reproduciendo URL: $streamUrl")
-
-                    // Le decimos al reproductor que reproduzca esta URL
-                    // Necesitamos el contexto, que lo obtenemos del repositorio
                     MusicPlayer.play(musicRepository.context, streamUrl)
                 } else {
                     Log.e("MainViewModel", "No se pudo reproducir la canción: Faltan datos de sesión.")
@@ -57,5 +53,50 @@ class MainViewModel(private val musicRepository: MusicRepository) : ViewModel() 
 
     fun onDownloadSongClicked(song: Song) {
         musicRepository.startSongDownload(song)
+    }
+
+    // =====================================================================
+    // === ¡AQUÍ ESTÁ LA ÚNICA FUNCIÓN QUE NECESITAS AÑADIR! ===
+    // =====================================================================
+    /**
+     * Toma un objeto Song y construye la URL completa de su carátula.
+     * Esta función será llamada desde MainFragment para obtener la imagen
+     * de la fila "Ahora Suena".
+     */
+    suspend fun getCoverUrlForSong(song: Song): String? {
+        return try {
+            // Accedemos a los datos de la sesión a través del repositorio, como ya haces.
+            val baseUrl = musicRepository.settingsRepository.serverUrlFlow.first()
+            val user = musicRepository.settingsRepository.usernameFlow.first()
+            val token = musicRepository.settingsRepository.tokenFlow.first()
+            val salt = musicRepository.settingsRepository.saltFlow.first()
+
+            if (baseUrl != null && user != null && token != null && salt != null) {
+                // Llamamos al método del objeto Song para construir la URL.
+                song.buildCoverArtUrl(baseUrl, user, token, salt)
+            } else {
+                null // Si falta algún dato de la sesión, no podemos construir la URL.
+            }
+        } catch (e: Exception) {
+            Log.e("MainViewModel", "Error al obtener la URL de la carátula", e)
+            null // En caso de error, devolvemos null para que no se caiga la app.
+        }
+    }
+
+    suspend fun getStreamUrlForSong(song: Song): String? {
+        return try {
+            val baseUrl = musicRepository.settingsRepository.serverUrlFlow.first()
+            val user = musicRepository.settingsRepository.usernameFlow.first()
+            val token = musicRepository.settingsRepository.tokenFlow.first()
+            val salt = musicRepository.settingsRepository.saltFlow.first()
+
+            if (baseUrl != null && user != null && token != null && salt != null) {
+                song.getStreamUrl(baseUrl, user, token, salt)
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            null
+        }
     }
 }
