@@ -13,6 +13,7 @@ import com.example.senianmusic.player.PlayerStatus // ¡IMPORTANTE!
 import com.example.senianmusic.ui.main.MainViewModel
 import com.example.senianmusic.ui.main.MainViewModelFactory
 import com.example.senianmusic.ui.playback.PlaybackActivity
+import com.example.senianmusic.player.MusicPlayer
 import com.example.senianmusic.ui.presenter.CardPresenter
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -47,7 +48,6 @@ class MainFragment : BrowseSupportFragment() {
     // --- ESTA ES LA FUNCIÓN CLAVE CORREGIDA ---
     private fun setupEventListeners() {
         onItemViewClickedListener = OnItemViewClickedListener { _, item, _, row ->
-            // Nos aseguramos de que el clic sea en una canción
             if (item is Song) {
                 val listRow = row as ListRow
                 val listRowAdapter = listRow.adapter as ArrayObjectAdapter
@@ -58,12 +58,23 @@ class MainFragment : BrowseSupportFragment() {
                 }
                 val currentIndex = playlist.indexOf(item)
 
-                // 1. Establecemos el estado global de reproducción.
-                // Esto es lo que le dirá a MainActivity que muestre la barra.
+                // 1. Establecemos el estado global de reproducción. (Esto ya lo hacías bien)
                 PlayerStatus.setPlaylist(playlist, currentIndex)
 
-                // 2. Lanzamos la actividad de reproducción.
-                // Ya no necesita pasarle extras porque leerá todo desde PlayerStatus.
+                // --- 2. ¡NUEVO PASO CRÍTICO! INICIAMOS LA REPRODUCCIÓN AQUÍ Y AHORA ---
+                lifecycleScope.launch {
+                    // Usamos el ViewModel para obtener la URL del stream
+                    val streamUrl = viewModel.getStreamUrlForSong(item) // 'item' es la canción en la que se hizo clic
+                    if (streamUrl != null) {
+                        // Le damos la orden de reproducir al MusicPlayer
+                        MusicPlayer.play(requireContext(), streamUrl)
+                    } else {
+                        // Opcional: Mostrar un Toast si falla la obtención de la URL
+                        // Toast.makeText(requireContext(), "Error al obtener la canción", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                // 3. Lanzamos la actividad de reproducción, que ahora solo mostrará el estado.
                 startActivity(Intent(requireActivity(), PlaybackActivity::class.java))
             }
         }

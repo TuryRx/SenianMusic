@@ -47,10 +47,35 @@ class PlaybackActivity : FragmentActivity() {
         settingsRepository = SettingsRepository(applicationContext)
         player = MusicPlayer.getInstance(this)
 
-        initializeStateAndUi()
+        // Obtenemos la canción actual del estado global
+        val currentSong = PlayerStatus.currentSong
+        if (currentSong == null) {
+            Toast.makeText(this, "Error: No hay canción en reproducción.", Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
+
+        // --- LÓGICA SIMPLIFICADA Y CORRECTA ---
+        // La música ya fue iniciada por MainFragment o los botones de la barra.
+        // La única tarea de onCreate es SINCRONIZAR la interfaz gráfica.
+        // NO llamamos a playSong() aquí.
+
+        // 1. Actualiza la información visual de la canción (título, carátula, etc.)
+        updateUiWithSongData(currentSong)
+
+        // 2. Actualiza los controles (el botón de play/pausa y la duración total)
+        updateUiFromPlayerState()
+
+        // 3. Si la música está sonando, empezamos a actualizar la barra de progreso
+        if (PlayerStatus.isPlaying) {
+            handler.post(uiUpdateRunnable)
+        }
+
+        // 4. Configuramos los listeners de los botones y la seekbar como siempre
         setupButtonListeners()
         setupSeekBarListener()
     }
+
 
     override fun onStart() {
         super.onStart()
