@@ -20,6 +20,7 @@ import com.example.senianmusic.ui.presenter.CardPresenter
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import android.os.Parcelable
 
 class SearchFragment : SearchSupportFragment(), SearchSupportFragment.SearchResultProvider {
 
@@ -112,8 +113,8 @@ class SearchFragment : SearchSupportFragment(), SearchSupportFragment.SearchResu
     private fun setupEventListeners() {
         setOnItemViewClickedListener { _, item, _, _ ->
             if (item is Song) {
-                // Obtenemos todos los resultados actuales para crear la playlist
-                val playlist = ArrayList<Song>()
+                // 1. Obtenemos todos los resultados actuales para crear la masterPlaylist
+                val playlist = ArrayList<Parcelable>()
                 (rowsAdapter.get(0) as? ListRow)?.adapter?.let { adapter ->
                     for (i in 0 until adapter.size()) {
                         if (adapter.get(i) is Song) {
@@ -122,24 +123,21 @@ class SearchFragment : SearchSupportFragment(), SearchSupportFragment.SearchResu
                     }
                 }
 
-                val currentIndex = playlist.indexOf(item)
-
                 if (playlist.isEmpty()) {
                     // Como fallback, si algo sale mal, creamos una playlist con la canción actual
                     playlist.add(item)
                 }
 
-                PlayerStatus.setPlaylist(playlist, if (currentIndex != -1) currentIndex else 0)
+                // 2. Encontramos el índice de la canción clickeada
+                val startIndex = playlist.indexOf(item)
 
-                lifecycleScope.launch {
-                    val streamUrl = viewModel.getStreamUrlForSong(item)
-                    if (streamUrl != null) {
-                        MusicPlayer.play(requireContext(), streamUrl)
-                    } else {
-                        Log.e("SearchFragment", "No se pudo obtener la URL del stream para ${item.title}")
-                    }
+                // 3. Lanzamos PlaybackActivity con la información
+                val intent = Intent(requireActivity(), PlaybackActivity::class.java).apply {
+                    action = PlaybackActivity.ACTION_START_PLAYBACK
+                    putParcelableArrayListExtra(PlaybackActivity.EXTRA_MASTER_PLAYLIST, playlist)
+                    putExtra(PlaybackActivity.EXTRA_START_INDEX, if (startIndex != -1) startIndex else 0)
                 }
-                startActivity(Intent(requireActivity(), PlaybackActivity::class.java))
+                startActivity(intent)
             }
         }
     }

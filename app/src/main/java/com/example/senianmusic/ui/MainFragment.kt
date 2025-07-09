@@ -11,8 +11,6 @@ import androidx.leanback.widget.*
 import androidx.lifecycle.lifecycleScope
 import com.example.senianmusic.data.remote.model.Album
 import com.example.senianmusic.data.remote.model.Song
-import com.example.senianmusic.player.MusicPlayer
-import com.example.senianmusic.player.PlayerStatus
 import com.example.senianmusic.ui.album.AlbumDetailActivity
 import com.example.senianmusic.ui.main.MainViewModel
 import com.example.senianmusic.ui.main.MainViewModelFactory
@@ -53,69 +51,69 @@ class MainFragment : BrowseSupportFragment() {
         adapter = rowsAdapter
     }
 
+    // --- setupEventListeners CON LA LÓGICA RESTAURADA ---
     private fun setupEventListeners() {
-        // La firma de la lambda ahora es correcta
         onItemViewClickedListener = OnItemViewClickedListener { _, item, _, row ->
+            val clickedRow = row as? ListRow ?: return@OnItemViewClickedListener
+
             when (item) {
                 is Song -> {
-                    val clickedRow = row as? ListRow ?: return@OnItemViewClickedListener
-                    val playlist = ArrayList<Song>()
-                    val listRowAdapter = clickedRow.adapter
-                    for (i in 0 until listRowAdapter.size()) {
-                        if (listRowAdapter.get(i) is Song) {
-                            playlist.add(listRowAdapter.get(i) as Song)
-                        }
-                    }
-                    if (playlist.isEmpty()) return@OnItemViewClickedListener
-                    val currentIndex = playlist.indexOf(item)
-                    PlayerStatus.setPlaylist(playlist, if (currentIndex != -1) currentIndex else 0)
-                    lifecycleScope.launch {
-                        val url = viewModel.getStreamUrlForSong(item)
-                        if (url != null) MusicPlayer.play(requireContext(), url)
-                    }
-                    startActivity(Intent(requireActivity(), PlaybackActivity::class.java))
+                    // Si es una canción, siempre iniciamos la reproducción de la lista completa
+                    Log.d("MainFragment", "Canción '${item.title}' clickeada. Iniciando lista maestra...")
+                    startMasterPlaylistPlayback(item, clickedRow)
                 }
                 is Album -> {
+                    // Si es un álbum, decidimos qué hacer
                     if (item.songCount == 1) {
-                        Log.d("MainFragment", "Single detectado: ${item.name}. Reproduciendo...")
-                        playSingleAlbum(item)
+                        // Si es un "single", iniciamos la reproducción de la lista completa
+                        Log.d("MainFragment", "Single '${item.name}' clickeado. Iniciando lista maestra...")
+                        startMasterPlaylistPlayback(item, clickedRow)
                     } else {
-                        Log.d("MainFragment", "Álbum con ${item.songCount} canciones. Navegando...")
-                        navigateToAlbumDetail(item, row as? ListRow)
+                        // Si es un álbum completo, navegamos a los detalles
+                        Log.d("MainFragment", "Álbum '${item.name}' clickeado. Navegando a detalles...")
+                        navigateToAlbumDetail(item)
                     }
                 }
             }
         }
     }
 
-    private fun playSingleAlbum(album: Album) {
-        lifecycleScope.launch {
-            val songs = viewModel.fetchAlbumSongs(album.id)
-            if (songs.isNotEmpty()) {
-                val singleSong = songs[0]
-                PlayerStatus.setPlaylist(arrayListOf(singleSong), 0)
-                val url = viewModel.getStreamUrlForSong(singleSong)
-                if (url != null) MusicPlayer.play(requireContext(), url)
-                startActivity(Intent(requireActivity(), PlaybackActivity::class.java))
-            } else {
-                Log.e("MainFragment", "No se pudo obtener la canción del single: ${album.name}")
+    /**
+     * NUEVA FUNCIÓN DE AYUDA para no repetir código.
+     * Crea la lista maestra a partir de la fila y lanza PlaybackActivity.
+     */
+    private fun startMasterPlaylistPlayback(item: Parcelable, row: ListRow) {
+        val listRowAdapter = row.adapter
+
+        // 1. Crear la lista maestra de Parcelables
+        val masterPlaylist = ArrayList<Parcelable>()
+        for (i in 0 until listRowAdapter.size()) {
+            (listRowAdapter.get(i) as? Parcelable)?.let {
+                masterPlaylist.add(it)
             }
         }
+
+        if (masterPlaylist.isEmpty()) return
+
+        // 2. Encontrar el índice del elemento clickeado
+        val startIndex = masterPlaylist.indexOf(item)
+
+        // 3. Lanzar PlaybackActivity con toda la información
+        val intent = Intent(requireActivity(), PlaybackActivity::class.java).apply {
+            action = PlaybackActivity.ACTION_START_PLAYBACK
+            putParcelableArrayListExtra(PlaybackActivity.EXTRA_MASTER_PLAYLIST, masterPlaylist)
+            putExtra(PlaybackActivity.EXTRA_START_INDEX, if (startIndex != -1) startIndex else 0)
+        }
+        startActivity(intent)
     }
 
-    private fun navigateToAlbumDetail(album: Album, row: ListRow?) {
-        val clickedRow = row ?: return
-        val albumsInRow = ArrayList<Album>()
-        val listRowAdapter = clickedRow.adapter
-        for (i in 0 until listRowAdapter.size()) {
-            if (listRowAdapter.get(i) is Album) {
-                albumsInRow.add(listRowAdapter.get(i) as Album)
-            }
-        }
+    /**
+     * RESTAURAMOS ESTA FUNCIÓN para navegar a los detalles del álbum.
+     */
+    private fun navigateToAlbumDetail(album: Album) {
         val intent = Intent(requireActivity(), AlbumDetailActivity::class.java).apply {
             putExtra(AlbumDetailActivity.ALBUM_ID, album.id)
             putExtra(AlbumDetailActivity.ALBUM_NAME, album.name)
-            putParcelableArrayListExtra(AlbumDetailActivity.ALBUM_PLAYLIST, albumsInRow)
         }
         startActivity(intent)
     }

@@ -34,6 +34,10 @@ import com.example.senianmusic.ui.main.MainViewModelFactory
 import com.example.senianmusic.ui.playback.PlaybackActivity
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import com.example.senianmusic.player.PlaybackController // <-- AÑADE ESTA IMPORTACIÓN
+import com.example.senianmusic.data.repository.MusicRepository // <-- AÑADE ESTA IMPORTACIÓN
+import com.example.senianmusic.data.local.AppDatabase // <-- AÑADE ESTA LÍNEA
+import com.example.senianmusic.data.remote.RetrofitClient
 
 class MainActivity : FragmentActivity() {
 
@@ -59,7 +63,13 @@ class MainActivity : FragmentActivity() {
         setContentView(R.layout.activity_main)
         playerBarContainer = findViewById(R.id.bottom_player_bar_container)
         settingsRepository = SettingsRepository(applicationContext)
+
+        // <-- INICIALIZA EL CONTROLADOR AQUÍ
+        val musicRepository = MusicRepository(applicationContext, AppDatabase.getDatabase(this).songDao(), settingsRepository, RetrofitClient.getApiService())
+        PlaybackController.initialize(musicRepository, applicationContext)
+
         lifecycleScope.launch {
+            // ... resto de tu lógica de onCreate
             val serverUrl = settingsRepository.serverUrlFlow.first()
             if (serverUrl.isNullOrBlank()) {
                 navigateToLogin()
@@ -142,19 +152,29 @@ class MainActivity : FragmentActivity() {
             if (willBePlaying) MusicPlayer.resume() else MusicPlayer.pause()
         }
 
+        // <-- ¡LA CORRECCIÓN MÁGICA! AHORA LLAMAN AL CONTROLADOR
         btnNext.setOnClickListener {
-            PlayerStatus.playNext()
-            playCurrentSongFromBar()
+            PlaybackController.goToNext()
         }
 
         btnPrev.setOnClickListener {
-            PlayerStatus.playPrevious()
-            playCurrentSongFromBar()
+            PlaybackController.goToPrevious()
         }
+        // <-- FIN DE LA CORRECCIÓN
 
         btnExpand.setOnClickListener { openPlaybackActivity() }
         playerBarContainer.setOnClickListener { openPlaybackActivity() }
     }
+
+
+    // --- IMPORTANTE: BORRA ESTA FUNCIÓN ---
+    // La función playCurrentSongFromBar() ya no es necesaria y causaría más problemas.
+    // Borra la función completa.
+    /*
+    private fun playCurrentSongFromBar() {
+        // ... contenido a borrar
+    }
+    */
 
     private fun playCurrentSongFromBar() {
         val song = PlayerStatus.currentSong ?: return
