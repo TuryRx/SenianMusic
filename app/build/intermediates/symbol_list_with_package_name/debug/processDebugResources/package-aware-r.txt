@@ -1605,6 +1605,7 @@ color background_gradient_end
 color background_gradient_start
 color background_material_dark
 color background_material_light
+color brand_color
 color bright_foreground_disabled_material_dark
 color bright_foreground_disabled_material_light
 color bright_foreground_inverse_material_dark
@@ -3563,6 +3564,7 @@ drawable abc_textfield_search_activated_mtrl_alpha
 drawable abc_textfield_search_default_mtrl_alpha
 drawable abc_textfield_search_material
 drawable abc_vector_test
+drawable action_background
 drawable app_banner
 drawable app_icon_your_company
 drawable avd_hide_password
@@ -3661,6 +3663,7 @@ drawable exo_styled_controls_subtitle_off
 drawable exo_styled_controls_subtitle_on
 drawable exo_styled_controls_vr
 drawable focus_highlight
+drawable ic_account_circle
 drawable ic_arrow_back_black_24
 drawable ic_call_answer
 drawable ic_call_answer_low
@@ -3894,6 +3897,7 @@ id accessibility_custom_action_6
 id accessibility_custom_action_7
 id accessibility_custom_action_8
 id accessibility_custom_action_9
+id account_button
 id action0
 id actionDown
 id actionDownUp
@@ -4087,6 +4091,10 @@ id edge
 id edit_query
 id edit_text_id
 id elastic
+id emailEditText
+id emailLoginButton
+id emailPasswordEditText
+id email_login_form
 id embed
 id end
 id endToStart
@@ -4289,7 +4297,9 @@ id listMode
 id list_item
 id ll_indicator_info
 id ll_song_info
+id loginWithEmailButton
 id logo
+id logout_button
 id m3_side_sheet
 id main
 id mainOnly
@@ -4443,6 +4453,7 @@ id progress_horizontal
 id radio
 id ratio
 id rectangles
+id registerTextView
 id report_drawn
 id reverseSawtooth
 id right
@@ -4485,6 +4496,9 @@ id selected
 id selection_type
 id separate_time
 id separator
+id serverLoginButton
+id server_login_form
+id settings_title
 id sharedValueSet
 id sharedValueUnset
 id shortcut
@@ -4561,7 +4575,6 @@ id thumbs_row
 id time
 id title
 id titleDividerNoCustom
-id titleTextView
 id title_badge
 id title_orb
 id title_template
@@ -4596,6 +4609,8 @@ id up
 id urlEditText
 id useLogo
 id userEditText
+id username_label
+id username_textview
 id vertical_only
 id video_decoder_gl_surface_view
 id video_surface
@@ -4608,6 +4623,7 @@ id view_tree_saved_state_registry_owner
 id view_tree_view_model_store_owner
 id visible
 id visible_removing_fragment_view_tag
+id welcomeTextView
 id west
 id when_playing
 id withText
@@ -4776,7 +4792,9 @@ layout activity_login
 layout activity_main
 layout activity_playback
 layout activity_search
+layout activity_settings
 layout activity_setup
+layout custom_browse_title_view
 layout custom_dialog
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog

@@ -1,0 +1,17 @@
+<!-- en res/drawable/action_background.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Estado cuando el botón está enfocado -->
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#4CAF50"/> <!-- Un verde más brillante al enfocar -->
+            <corners android:radius="4dp"/>
+        </shape>
+    </item>
+    <!-- Estado por defecto (no enfocado) -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/brand_color"/> <!-- Tu color de marca -->
+            <corners android:radius="4dp"/>
+        </shape>
+    </item>
+</selector>

@@ -17,7 +17,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val musicRepository: MusicRepository) : ViewModel() {
+// --- CAMBIO 1: El constructor ahora acepta y guarda ambos repositorios ---
+class MainViewModel(
+    private val musicRepository: MusicRepository,
+    val settingsRepository: SettingsRepository // <-- Añadido aquí
+) : ViewModel() {
 
     private val _homeScreenRows = MutableStateFlow<List<HomeScreenRow>>(emptyList())
     val homeScreenRows = _homeScreenRows.asStateFlow()
@@ -56,11 +60,19 @@ class MainViewModel(private val musicRepository: MusicRepository) : ViewModel() 
         return musicRepository.fetchAlbumDetails(albumId)
     }
 
-    // --- ¡LA FUNCIÓN QUE FALTABA! ---
-    // Esta función es llamada desde PlaybackActivity para notificar al servidor.
     fun scrobbleSong(song: Song) {
         viewModelScope.launch(Dispatchers.IO) {
             musicRepository.scrobbleSong(song.id)
+        }
+    }
+
+    // --- ¡NUEVA FUNCIÓN DE LOGOUT! ---
+    // Esta función ahora compilará sin problemas porque `settingsRepository`
+    // es una propiedad de la clase.
+    fun logout() {
+        viewModelScope.launch {
+            settingsRepository.clearLoginSession()
+            Log.d("MainViewModel", "Sesión de usuario eliminada de DataStore.")
         }
     }
 }

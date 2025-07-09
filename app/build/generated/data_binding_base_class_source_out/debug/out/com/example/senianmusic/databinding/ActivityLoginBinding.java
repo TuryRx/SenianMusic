@@ -26,13 +26,34 @@ public final class ActivityLoginBinding implements ViewBinding {
   public final Button connectButton;
 
   @NonNull
+  public final EditText emailEditText;
+
+  @NonNull
+  public final Button emailLoginButton;
+
+  @NonNull
+  public final LinearLayout emailLoginForm;
+
+  @NonNull
+  public final EditText emailPasswordEditText;
+
+  @NonNull
+  public final Button loginWithEmailButton;
+
+  @NonNull
   public final EditText passwordEditText;
 
   @NonNull
   public final ProgressBar progressBar;
 
   @NonNull
-  public final TextView titleTextView;
+  public final TextView registerTextView;
+
+  @NonNull
+  public final Button serverLoginButton;
+
+  @NonNull
+  public final LinearLayout serverLoginForm;
 
   @NonNull
   public final EditText urlEditText;
@@ -40,17 +61,32 @@ public final class ActivityLoginBinding implements ViewBinding {
   @NonNull
   public final EditText userEditText;
 
+  @NonNull
+  public final TextView welcomeTextView;
+
   private ActivityLoginBinding(@NonNull LinearLayout rootView, @NonNull Button connectButton,
-      @NonNull EditText passwordEditText, @NonNull ProgressBar progressBar,
-      @NonNull TextView titleTextView, @NonNull EditText urlEditText,
-      @NonNull EditText userEditText) {
+      @NonNull EditText emailEditText, @NonNull Button emailLoginButton,
+      @NonNull LinearLayout emailLoginForm, @NonNull EditText emailPasswordEditText,
+      @NonNull Button loginWithEmailButton, @NonNull EditText passwordEditText,
+      @NonNull ProgressBar progressBar, @NonNull TextView registerTextView,
+      @NonNull Button serverLoginButton, @NonNull LinearLayout serverLoginForm,
+      @NonNull EditText urlEditText, @NonNull EditText userEditText,
+      @NonNull TextView welcomeTextView) {
     this.rootView = rootView;
     this.connectButton = connectButton;
+    this.emailEditText = emailEditText;
+    this.emailLoginButton = emailLoginButton;
+    this.emailLoginForm = emailLoginForm;
+    this.emailPasswordEditText = emailPasswordEditText;
+    this.loginWithEmailButton = loginWithEmailButton;
     this.passwordEditText = passwordEditText;
     this.progressBar = progressBar;
-    this.titleTextView = titleTextView;
+    this.registerTextView = registerTextView;
+    this.serverLoginButton = serverLoginButton;
+    this.serverLoginForm = serverLoginForm;
     this.urlEditText = urlEditText;
     this.userEditText = userEditText;
+    this.welcomeTextView = welcomeTextView;
   }
 
   @Override
@@ -86,6 +122,36 @@ public final class ActivityLoginBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.emailEditText;
+      EditText emailEditText = ViewBindings.findChildViewById(rootView, id);
+      if (emailEditText == null) {
+        break missingId;
+      }
+
+      id = R.id.emailLoginButton;
+      Button emailLoginButton = ViewBindings.findChildViewById(rootView, id);
+      if (emailLoginButton == null) {
+        break missingId;
+      }
+
+      id = R.id.email_login_form;
+      LinearLayout emailLoginForm = ViewBindings.findChildViewById(rootView, id);
+      if (emailLoginForm == null) {
+        break missingId;
+      }
+
+      id = R.id.emailPasswordEditText;
+      EditText emailPasswordEditText = ViewBindings.findChildViewById(rootView, id);
+      if (emailPasswordEditText == null) {
+        break missingId;
+      }
+
+      id = R.id.loginWithEmailButton;
+      Button loginWithEmailButton = ViewBindings.findChildViewById(rootView, id);
+      if (loginWithEmailButton == null) {
+        break missingId;
+      }
+
       id = R.id.passwordEditText;
       EditText passwordEditText = ViewBindings.findChildViewById(rootView, id);
       if (passwordEditText == null) {
@@ -98,9 +164,21 @@ public final class ActivityLoginBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.titleTextView;
-      TextView titleTextView = ViewBindings.findChildViewById(rootView, id);
-      if (titleTextView == null) {
+      id = R.id.registerTextView;
+      TextView registerTextView = ViewBindings.findChildViewById(rootView, id);
+      if (registerTextView == null) {
+        break missingId;
+      }
+
+      id = R.id.serverLoginButton;
+      Button serverLoginButton = ViewBindings.findChildViewById(rootView, id);
+      if (serverLoginButton == null) {
+        break missingId;
+      }
+
+      id = R.id.server_login_form;
+      LinearLayout serverLoginForm = ViewBindings.findChildViewById(rootView, id);
+      if (serverLoginForm == null) {
         break missingId;
       }
 
@@ -116,8 +194,16 @@ public final class ActivityLoginBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityLoginBinding((LinearLayout) rootView, connectButton, passwordEditText,
-          progressBar, titleTextView, urlEditText, userEditText);
+      id = R.id.welcomeTextView;
+      TextView welcomeTextView = ViewBindings.findChildViewById(rootView, id);
+      if (welcomeTextView == null) {
+        break missingId;
+      }
+
+      return new ActivityLoginBinding((LinearLayout) rootView, connectButton, emailEditText,
+          emailLoginButton, emailLoginForm, emailPasswordEditText, loginWithEmailButton,
+          passwordEditText, progressBar, registerTextView, serverLoginButton, serverLoginForm,
+          urlEditText, userEditText, welcomeTextView);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

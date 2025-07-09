@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:layout_gravity="end"
+    android:gravity="center_vertical"
+    android:paddingEnd="48dp">
+
+    <Button
+        android:id="@+id/account_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cuenta"
+        android:drawableStart="@drawable/ic_account_circle"
+        android:drawablePadding="8dp"
+        android:background="?attr/selectableItemBackground"
+        android:textColor="?attr/colorOnPrimary" />
+
+</LinearLayout>

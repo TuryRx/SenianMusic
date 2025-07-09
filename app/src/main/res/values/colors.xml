@@ -5,6 +5,7 @@
     <color name="purple_500">#FF6200EE</color>
     <color name="search_opaque">#ffaa3f</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="brand_color">#009688</color> <!-- Puedes usar cualquier color, este es un verde azulado -->
     <color name="selected_background">#ffaa3f</color>
     <color name="default_background">#3d3d3d</color>
 </resources>

@@ -105,4 +105,14 @@ interface NavidromeApiService {
         @Query("f") format: String = "json"
     ): Response<SubsonicResponse> // Usaremos un modelo de respuesta genérico
 
+    @GET("rest/ping.view")
+    suspend fun ping(
+        @Query("u") user: String,
+        @Query("t") token: String,
+        @Query("s") salt: String,
+        @Query("v") version: String = "1.16.1",
+        @Query("c") client: String = "SenianMusic",
+        @Query("f") format: String = "json"
+    ): Response<SubsonicResponse> // Usa tu clase de respuesta base.
+
 }
