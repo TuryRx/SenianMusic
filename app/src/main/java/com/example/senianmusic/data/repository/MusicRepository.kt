@@ -221,4 +221,24 @@ class MusicRepository(
         }
     }
 
+    suspend fun scrobbleSong(songId: String) {
+        // --- CORRECCIÓN AQUÍ ---
+        // Cambiamos getSessionData() por getSession()
+        val session = getSession() ?: return
+        // --- FIN DE LA CORRECCIÓN ---
+
+        try {
+            // Esta llamada ahora es válida
+            apiService.scrobble(
+                user = session.user,
+                token = session.token,
+                salt = session.salt,
+                id = songId
+            )
+            Log.d("MusicRepository", "Scrobble exitoso para la canción ID: $songId")
+        } catch (e: Exception) {
+            Log.e("MusicRepository", "Falló el scrobble para la canción ID: $songId", e)
+        }
+    }
+
 }

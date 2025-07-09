@@ -3,6 +3,7 @@ package com.example.senianmusic.data.remote
 import com.example.senianmusic.data.remote.model.AlbumList2Response // ¡NUEVO!
 import com.example.senianmusic.data.remote.model.TopSongsResponse   // ¡NUEVO!
 import com.example.senianmusic.data.remote.model.AlbumResponse
+import com.example.senianmusic.data.remote.model.SubsonicResponse
 
 // Importa los nuevos modelos de respuesta
 import com.example.senianmusic.data.remote.model.ArtistsResponse
@@ -90,5 +91,18 @@ interface NavidromeApiService {
         @Query("c") client: String = "SenianMusic",
         @Query("f") format: String = "json"
     ): Response<Search3Response>
+
+    // --- ¡AÑADE ESTA NUEVA FUNCIÓN AQUÍ! ---
+    @GET("rest/scrobble.view")
+    suspend fun scrobble(
+        @Query("u") user: String,
+        @Query("t") token: String,
+        @Query("s") salt: String,
+        @Query("id") id: String, // El ID de la canción que se reprodujo
+        @Query("submission") submission: Boolean = true, // Es una buena práctica indicar que es una sumisión
+        @Query("v") version: String = "1.16.1",
+        @Query("c") client: String = "SenianMusic",
+        @Query("f") format: String = "json"
+    ): Response<SubsonicResponse> // Usaremos un modelo de respuesta genérico
 
 }

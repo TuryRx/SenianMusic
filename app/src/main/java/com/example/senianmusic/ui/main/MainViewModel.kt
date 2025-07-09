@@ -1,11 +1,17 @@
 package com.example.senianmusic.ui.main
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.senianmusic.data.local.AppDatabase
+import com.example.senianmusic.data.local.SettingsRepository
+import com.example.senianmusic.data.remote.RetrofitClient
 import com.example.senianmusic.data.remote.model.Song
 import com.example.senianmusic.data.repository.MusicRepository
 import com.example.senianmusic.ui.model.HomeScreenRow
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,52 +24,43 @@ class MainViewModel(private val musicRepository: MusicRepository) : ViewModel() 
 
     fun loadInitialData() {
         viewModelScope.launch {
-            // ...
             val randomSongsDeferred = async { musicRepository.fetchRandomSongs() }
-            // --- CAMBIO: LLAMAMOS A LA NUEVA FUNCIÓN ---
             val newestAlbumsDeferred = async { musicRepository.fetchAlbumList("newest") }
             val recentAlbumsDeferred = async { musicRepository.fetchAlbumList("recent") }
             val recommendedSongsDeferred = async { musicRepository.fetchTopSongs() }
 
             val randomSongs = randomSongsDeferred.await()
-            val newestAlbums = newestAlbumsDeferred.await() // <-- Ahora son álbumes
-            val recentAlbums = recentAlbumsDeferred.await() // <-- Ahora son álbumes
+            val newestAlbums = newestAlbumsDeferred.await()
+            val recentAlbums = recentAlbumsDeferred.await()
             val recommendedSongs = recommendedSongsDeferred.await()
 
             val rows = mutableListOf<HomeScreenRow>()
             if (randomSongs.isNotEmpty()) rows.add(HomeScreenRow.RandomSongsRow(randomSongs))
-            // --- CAMBIO: AÑADIMOS FILAS DE ÁLBUMES ---
             if (newestAlbums.isNotEmpty()) rows.add(HomeScreenRow.RecentlyAddedRow(newestAlbums))
             if (recentAlbums.isNotEmpty()) rows.add(HomeScreenRow.RecentlyPlayedRow(recentAlbums))
             if (recommendedSongs.isNotEmpty()) rows.add(HomeScreenRow.RecommendedRow(recommendedSongs))
 
             _homeScreenRows.value = rows
-            // ...
         }
     }
 
-
-    // --- ¡CORRECCIÓN IMPORTANTE! ---
-    // El ViewModel DELEGA la lógica al Repositorio. No la implementa él mismo.
-    // Esto mantiene el código limpio y las responsabilidades separadas.
-
-    /**
-     * Obtiene la URL de streaming para una canción.
-     * Esta función es llamada por el Fragment para iniciar la reproducción.
-     */
     suspend fun getStreamUrlForSong(song: Song): String? {
         return musicRepository.getStreamUrlForSong(song)
     }
 
-    /**
-     * Obtiene la URL de la carátula para una canción.
-     * Esta función es llamada por la barra inferior (MainActivity) para mostrar la imagen.
-     */
     suspend fun getCoverUrlForSong(song: Song): String? {
         return musicRepository.getCoverUrlForSong(song)
     }
 
     suspend fun fetchAlbumSongs(albumId: String): List<Song> {
         return musicRepository.fetchAlbumDetails(albumId)
+    }
+
+    // --- ¡LA FUNCIÓN QUE FALTABA! ---
+    // Esta función es llamada desde PlaybackActivity para notificar al servidor.
+    fun scrobbleSong(song: Song) {
+        viewModelScope.launch(Dispatchers.IO) {
+            musicRepository.scrobbleSong(song.id)
+        }
     }
 }

@@ -7,6 +7,7 @@ import android.os.Looper
 import android.os.Parcelable
 import android.widget.SeekBar
 import android.widget.Toast
+import android.util.Log
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.media3.common.Player
@@ -26,6 +27,9 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
+import androidx.activity.viewModels
+import com.example.senianmusic.ui.main.MainViewModel
+import com.example.senianmusic.ui.main.MainViewModelFactory
 
 class PlaybackActivity : FragmentActivity() {
 
@@ -35,6 +39,9 @@ class PlaybackActivity : FragmentActivity() {
         const val EXTRA_START_INDEX = "EXTRA_START_INDEX"
     }
 
+    private val viewModel: MainViewModel by viewModels {
+        MainViewModelFactory(applicationContext)
+    }
     private lateinit var binding: ActivityPlaybackBinding
     private lateinit var settingsRepository: SettingsRepository // <-- Todavía la necesitamos para la UI
     private var player: Player? = null
@@ -42,9 +49,35 @@ class PlaybackActivity : FragmentActivity() {
     private val handler = Handler(Looper.getMainLooper())
 
     // Este runnable para actualizar la barra de progreso se queda igual
+// En PlaybackActivity.kt
+
     private val uiUpdateRunnable: Runnable = object : Runnable {
         override fun run() {
             updateSeekBar()
+
+            val song = PlayerStatus.currentSong
+            val playerInstance = player
+
+            // Solo verificamos si la canción no ha sido scrobbleada
+            if (song != null && playerInstance != null && !PlayerStatus.isCurrentSongScrobbled && playerInstance.isPlaying) {
+                val position = playerInstance.currentPosition
+                val duration = playerInstance.duration
+
+                // --- LOGS DE DEPURACIÓN ---
+                // Este log aparecerá cada medio segundo.
+                Log.d("ScrobbleCheck", "Verificando: pos=${position}, dur=${duration}, scrobbled=${PlayerStatus.isCurrentSongScrobbled}")
+
+                // La condición: más de la mitad O más de 4 minutos (240000 ms)
+                if (duration > 0 && (position > duration / 2 || position > 240000)) {
+                    // --- ESTE LOG ES CRUCIAL ---
+                    // Si ves este mensaje, significa que la condición se cumplió.
+                    Log.d("ScrobbleCheck", "¡CONDICIÓN CUMPLIDA! Intentando scrobble para: ${song.title}")
+
+                    PlayerStatus.isCurrentSongScrobbled = true
+                    viewModel.scrobbleSong(song)
+                }
+            }
+
             handler.postDelayed(this, 500)
         }
     }

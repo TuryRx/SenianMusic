@@ -24,6 +24,7 @@ object PlayerStatus {
         private set
     var currentSongIndex: Int = -1
         private set
+    var isCurrentSongScrobbled: Boolean = false
 
     private val listeners = mutableListOf<() -> Unit>()
     private val handler = Handler(Looper.getMainLooper())
@@ -56,6 +57,11 @@ object PlayerStatus {
         this.currentSongIndex = songStartIndex
         this.currentSong = currentItemPlaylist.getOrNull(songStartIndex)
         this.isPlaying = true
+
+        // --- ASEGÚRATE DE TENER ESTA LÍNEA TAMBIÉN ---
+        // Reinicia el flag cada vez que se establece una nueva reproducción
+        this.isCurrentSongScrobbled = false
+
         notifyListeners()
     }
 
