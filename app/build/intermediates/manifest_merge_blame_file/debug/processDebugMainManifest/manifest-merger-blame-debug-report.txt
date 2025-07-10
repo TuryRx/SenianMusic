@@ -69,178 +69,177 @@
 41-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:26:9-69
 42        android:supportsRtl="true"
 42-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:24:9-35
-43        android:testOnly="true"
-44        android:theme="@style/Theme.SenianMusic" >
-44-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:25:9-49
-45
-46        <!-- SplashActivity es la nueva actividad de INICIO -->
-47        <activity
-47-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:30:9-38:20
-48            android:name="com.example.senianmusic.ui.SplashActivity"
-48-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:31:13-46
-49            android:exported="true"
-49-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:32:13-36
-50            android:theme="@style/Theme.SenianMusic" > <!-- CAMBIO REALIZADO AQUÍ -->
-50-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:33:13-53
-51            <intent-filter>
-51-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:34:13-37:29
-52                <action android:name="android.intent.action.MAIN" />
-52-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:35:17-69
-52-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:35:25-66
-53
-54                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
-54-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:36:17-86
-54-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:36:27-83
-55            </intent-filter>
-56        </activity>
-57
-58        <!-- LoginActivity ya no es la pantalla de inicio -->
-59        <activity
-59-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:41:9-44:53
-60            android:name="com.example.senianmusic.ui.login.LoginActivity"
-60-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:42:13-51
-61            android:exported="false"
-61-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:43:13-37
-62            android:theme="@style/Theme.Leanback" />
-62-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:44:13-50
-63
-64        <!-- MainActivity ya no es la pantalla de inicio -->
-65        <activity
-65-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:47:9-50:53
-66            android:name="com.example.senianmusic.MainActivity"
-66-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:48:13-41
-67            android:exported="false"
-67-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:49:13-37
-68            android:screenOrientation="landscape" />
-68-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:50:13-50
-69
-70        <!-- Resto de las actividades (sin cambios) -->
-71        <activity
-71-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:53:9-55:40
-72            android:name="com.example.senianmusic.BrowseErrorActivity"
-72-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:54:13-48
-73            android:exported="false" />
-73-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:55:13-37
-74        <activity
-74-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:57:9-60:65
-75            android:name="com.example.senianmusic.ui.playback.PlaybackActivity"
-75-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:58:13-57
-76            android:exported="false"
-76-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:59:13-37
-77            android:theme="@style/Theme.SenianMusic.Playback" />
-77-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:60:13-62
-78        <activity
-78-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:62:9-64:40
-79            android:name="com.example.senianmusic.ui.search.SearchActivity"
-79-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:63:13-53
-80            android:exported="false" />
-80-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:64:13-37
-81        <activity
-81-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:66:9-69:53
-82            android:name="com.example.senianmusic.ui.album.AlbumDetailActivity"
-82-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:67:13-57
-83            android:exported="false"
-83-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:68:13-37
-84            android:theme="@style/Theme.Leanback" />
-84-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:69:13-50
-85        <activity
-85-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:71:9-73:40
-86            android:name="com.example.senianmusic.ui.SettingsActivity"
-86-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:72:13-48
-87            android:exported="false" />
-87-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:73:13-37
-88
-89        <!-- Tu servicio de reproducción -->
-90        <service
-90-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:76:9-83:19
-91            android:name="com.example.senianmusic.player.PlaybackService"
-91-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:77:13-51
-92            android:exported="true"
-92-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:78:13-36
-93            android:foregroundServiceType="mediaPlayback" >
-93-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:79:13-58
-94            <intent-filter>
-94-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:80:13-82:29
-95                <action android:name="androidx.media3.session.MediaSessionService" />
-95-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:81:17-85
-95-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:81:25-83
-96            </intent-filter>
-97        </service>
-98
-99        <provider
-99-->[androidx.emoji2:emoji2:1.2.0] /home/roxas/.gradle/caches/8.13/transforms/b4b57fbfee716e88970d22cda19fa6f0/transformed/emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
-100            android:name="androidx.startup.InitializationProvider"
-100-->[androidx.emoji2:emoji2:1.2.0] /home/roxas/.gradle/caches/8.13/transforms/b4b57fbfee716e88970d22cda19fa6f0/transformed/emoji2-1.2.0/AndroidManifest.xml:25:13-67
-101            android:authorities="com.example.senianmusic.androidx-startup"
-101-->[androidx.emoji2:emoji2:1.2.0] /home/roxas/.gradle/caches/8.13/transforms/b4b57fbfee716e88970d22cda19fa6f0/transformed/emoji2-1.2.0/AndroidManifest.xml:26:13-68
-102            android:exported="false" >
-102-->[androidx.emoji2:emoji2:1.2.0] /home/roxas/.gradle/caches/8.13/transforms/b4b57fbfee716e88970d22cda19fa6f0/transformed/emoji2-1.2.0/AndroidManifest.xml:27:13-37
-103            <meta-data
-103-->[androidx.emoji2:emoji2:1.2.0] /home/roxas/.gradle/caches/8.13/transforms/b4b57fbfee716e88970d22cda19fa6f0/transformed/emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
-104                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-104-->[androidx.emoji2:emoji2:1.2.0] /home/roxas/.gradle/caches/8.13/transforms/b4b57fbfee716e88970d22cda19fa6f0/transformed/emoji2-1.2.0/AndroidManifest.xml:30:17-75
-105                android:value="androidx.startup" />
-105-->[androidx.emoji2:emoji2:1.2.0] /home/roxas/.gradle/caches/8.13/transforms/b4b57fbfee716e88970d22cda19fa6f0/transformed/emoji2-1.2.0/AndroidManifest.xml:31:17-49
-106            <meta-data
-106-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/roxas/.gradle/caches/8.13/transforms/500f258a539e68766c795b7d51a320c9/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
-107                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-107-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/roxas/.gradle/caches/8.13/transforms/500f258a539e68766c795b7d51a320c9/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
-108                android:value="androidx.startup" />
-108-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/roxas/.gradle/caches/8.13/transforms/500f258a539e68766c795b7d51a320c9/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
-109            <meta-data
-109-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
-110                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-110-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
-111                android:value="androidx.startup" />
-111-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
-112        </provider>
-113
-114        <service
-114-->[androidx.room:room-runtime:2.6.1] /home/roxas/.gradle/caches/8.13/transforms/5e43df3c5110f44807d0befddaa4fd94/transformed/room-runtime-2.6.1/AndroidManifest.xml:24:9-28:63
-115            android:name="androidx.room.MultiInstanceInvalidationService"
-115-->[androidx.room:room-runtime:2.6.1] /home/roxas/.gradle/caches/8.13/transforms/5e43df3c5110f44807d0befddaa4fd94/transformed/room-runtime-2.6.1/AndroidManifest.xml:25:13-74
-116            android:directBootAware="true"
-116-->[androidx.room:room-runtime:2.6.1] /home/roxas/.gradle/caches/8.13/transforms/5e43df3c5110f44807d0befddaa4fd94/transformed/room-runtime-2.6.1/AndroidManifest.xml:26:13-43
-117            android:exported="false" />
-117-->[androidx.room:room-runtime:2.6.1] /home/roxas/.gradle/caches/8.13/transforms/5e43df3c5110f44807d0befddaa4fd94/transformed/room-runtime-2.6.1/AndroidManifest.xml:27:13-37
-118
-119        <receiver
-119-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
-120            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-120-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
-121            android:directBootAware="false"
-121-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
-122            android:enabled="true"
-122-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
-123            android:exported="true"
-123-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
-124            android:permission="android.permission.DUMP" >
-124-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
-125            <intent-filter>
-125-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
-126                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-126-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
-126-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
-127            </intent-filter>
-128            <intent-filter>
-128-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
-129                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-129-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
-129-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
-130            </intent-filter>
-131            <intent-filter>
-131-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
-132                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-132-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
-132-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
-133            </intent-filter>
-134            <intent-filter>
-134-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
-135                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-135-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
-135-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
-136            </intent-filter>
-137        </receiver>
-138    </application>
-139
-140</manifest>
+43        android:theme="@style/Theme.SenianMusic" >
+43-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:25:9-49
+44
+45        <!-- SplashActivity es la nueva actividad de INICIO -->
+46        <activity
+46-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:30:9-38:20
+47            android:name="com.example.senianmusic.ui.SplashActivity"
+47-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:31:13-46
+48            android:exported="true"
+48-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:32:13-36
+49            android:theme="@style/Theme.SenianMusic" > <!-- CAMBIO REALIZADO AQUÍ -->
+49-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:33:13-53
+50            <intent-filter>
+50-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:34:13-37:29
+51                <action android:name="android.intent.action.MAIN" />
+51-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:35:17-69
+51-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:35:25-66
+52
+53                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+53-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:36:17-86
+53-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:36:27-83
+54            </intent-filter>
+55        </activity>
+56
+57        <!-- LoginActivity ya no es la pantalla de inicio -->
+58        <activity
+58-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:41:9-44:53
+59            android:name="com.example.senianmusic.ui.login.LoginActivity"
+59-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:42:13-51
+60            android:exported="false"
+60-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:43:13-37
+61            android:theme="@style/Theme.Leanback" />
+61-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:44:13-50
+62
+63        <!-- MainActivity ya no es la pantalla de inicio -->
+64        <activity
+64-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:47:9-50:53
+65            android:name="com.example.senianmusic.MainActivity"
+65-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:48:13-41
+66            android:exported="false"
+66-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:49:13-37
+67            android:screenOrientation="landscape" />
+67-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:50:13-50
+68
+69        <!-- Resto de las actividades (sin cambios) -->
+70        <activity
+70-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:53:9-55:40
+71            android:name="com.example.senianmusic.BrowseErrorActivity"
+71-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:54:13-48
+72            android:exported="false" />
+72-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:55:13-37
+73        <activity
+73-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:57:9-60:65
+74            android:name="com.example.senianmusic.ui.playback.PlaybackActivity"
+74-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:58:13-57
+75            android:exported="false"
+75-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:59:13-37
+76            android:theme="@style/Theme.SenianMusic.Playback" />
+76-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:60:13-62
+77        <activity
+77-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:62:9-64:40
+78            android:name="com.example.senianmusic.ui.search.SearchActivity"
+78-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:63:13-53
+79            android:exported="false" />
+79-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:64:13-37
+80        <activity
+80-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:66:9-69:53
+81            android:name="com.example.senianmusic.ui.album.AlbumDetailActivity"
+81-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:67:13-57
+82            android:exported="false"
+82-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:68:13-37
+83            android:theme="@style/Theme.Leanback" />
+83-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:69:13-50
+84        <activity
+84-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:71:9-73:40
+85            android:name="com.example.senianmusic.ui.SettingsActivity"
+85-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:72:13-48
+86            android:exported="false" />
+86-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:73:13-37
+87
+88        <!-- Tu servicio de reproducción -->
+89        <service
+89-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:76:9-83:19
+90            android:name="com.example.senianmusic.player.PlaybackService"
+90-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:77:13-51
+91            android:exported="true"
+91-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:78:13-36
+92            android:foregroundServiceType="mediaPlayback" >
+92-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:79:13-58
+93            <intent-filter>
+93-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:80:13-82:29
+94                <action android:name="androidx.media3.session.MediaSessionService" />
+94-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:81:17-85
+94-->/home/roxas/AndroidStudioProjects/SenianMusic/app/src/main/AndroidManifest.xml:81:25-83
+95            </intent-filter>
+96        </service>
+97
+98        <provider
+98-->[androidx.emoji2:emoji2:1.2.0] /home/roxas/.gradle/caches/8.13/transforms/b4b57fbfee716e88970d22cda19fa6f0/transformed/emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+99            android:name="androidx.startup.InitializationProvider"
+99-->[androidx.emoji2:emoji2:1.2.0] /home/roxas/.gradle/caches/8.13/transforms/b4b57fbfee716e88970d22cda19fa6f0/transformed/emoji2-1.2.0/AndroidManifest.xml:25:13-67
+100            android:authorities="com.example.senianmusic.androidx-startup"
+100-->[androidx.emoji2:emoji2:1.2.0] /home/roxas/.gradle/caches/8.13/transforms/b4b57fbfee716e88970d22cda19fa6f0/transformed/emoji2-1.2.0/AndroidManifest.xml:26:13-68
+101            android:exported="false" >
+101-->[androidx.emoji2:emoji2:1.2.0] /home/roxas/.gradle/caches/8.13/transforms/b4b57fbfee716e88970d22cda19fa6f0/transformed/emoji2-1.2.0/AndroidManifest.xml:27:13-37
+102            <meta-data
+102-->[androidx.emoji2:emoji2:1.2.0] /home/roxas/.gradle/caches/8.13/transforms/b4b57fbfee716e88970d22cda19fa6f0/transformed/emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+103                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+103-->[androidx.emoji2:emoji2:1.2.0] /home/roxas/.gradle/caches/8.13/transforms/b4b57fbfee716e88970d22cda19fa6f0/transformed/emoji2-1.2.0/AndroidManifest.xml:30:17-75
+104                android:value="androidx.startup" />
+104-->[androidx.emoji2:emoji2:1.2.0] /home/roxas/.gradle/caches/8.13/transforms/b4b57fbfee716e88970d22cda19fa6f0/transformed/emoji2-1.2.0/AndroidManifest.xml:31:17-49
+105            <meta-data
+105-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/roxas/.gradle/caches/8.13/transforms/500f258a539e68766c795b7d51a320c9/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
+106                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+106-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/roxas/.gradle/caches/8.13/transforms/500f258a539e68766c795b7d51a320c9/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
+107                android:value="androidx.startup" />
+107-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/roxas/.gradle/caches/8.13/transforms/500f258a539e68766c795b7d51a320c9/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
+108            <meta-data
+108-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
+109                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+109-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
+110                android:value="androidx.startup" />
+110-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
+111        </provider>
+112
+113        <service
+113-->[androidx.room:room-runtime:2.6.1] /home/roxas/.gradle/caches/8.13/transforms/5e43df3c5110f44807d0befddaa4fd94/transformed/room-runtime-2.6.1/AndroidManifest.xml:24:9-28:63
+114            android:name="androidx.room.MultiInstanceInvalidationService"
+114-->[androidx.room:room-runtime:2.6.1] /home/roxas/.gradle/caches/8.13/transforms/5e43df3c5110f44807d0befddaa4fd94/transformed/room-runtime-2.6.1/AndroidManifest.xml:25:13-74
+115            android:directBootAware="true"
+115-->[androidx.room:room-runtime:2.6.1] /home/roxas/.gradle/caches/8.13/transforms/5e43df3c5110f44807d0befddaa4fd94/transformed/room-runtime-2.6.1/AndroidManifest.xml:26:13-43
+116            android:exported="false" />
+116-->[androidx.room:room-runtime:2.6.1] /home/roxas/.gradle/caches/8.13/transforms/5e43df3c5110f44807d0befddaa4fd94/transformed/room-runtime-2.6.1/AndroidManifest.xml:27:13-37
+117
+118        <receiver
+118-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
+119            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+119-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
+120            android:directBootAware="false"
+120-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
+121            android:enabled="true"
+121-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
+122            android:exported="true"
+122-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
+123            android:permission="android.permission.DUMP" >
+123-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
+124            <intent-filter>
+124-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
+125                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+125-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
+125-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
+126            </intent-filter>
+127            <intent-filter>
+127-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
+128                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+128-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
+128-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
+129            </intent-filter>
+130            <intent-filter>
+130-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
+131                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+131-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
+131-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
+132            </intent-filter>
+133            <intent-filter>
+133-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
+134                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+134-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
+134-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/roxas/.gradle/caches/8.13/transforms/01397ffd2a14ea0b371743d01dc1b682/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
+135            </intent-filter>
+136        </receiver>
+137    </application>
+138
+139</manifest>

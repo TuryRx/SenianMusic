@@ -5,15 +5,15 @@ import android.util.Log
 import com.example.senianmusic.data.local.SettingsRepository
 import com.example.senianmusic.data.local.dao.SongDao
 import com.example.senianmusic.data.remote.NavidromeApiService
+import com.example.senianmusic.data.remote.model.Album
 import com.example.senianmusic.data.remote.model.Artist
+import com.example.senianmusic.data.remote.model.SearchResult3 // Asegúrate de que esta importación esté
 import com.example.senianmusic.data.remote.model.Song
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
-import com.example.senianmusic.data.remote.model.Album
-
 
 class MusicRepository(
     val context: Context,
@@ -21,6 +21,8 @@ class MusicRepository(
     val settingsRepository: SettingsRepository,
     private val apiService: NavidromeApiService
 ) {
+
+    private data class SessionData(val baseUrl: String, val user: String, val token: String, val salt: String)
 
     private suspend fun getSession(): SessionData? {
         return try {
@@ -40,9 +42,6 @@ class MusicRepository(
         }
     }
 
-    private data class SessionData(val baseUrl: String, val user: String, val token: String, val salt: String)
-
-    // --- FUNCIÓN CORREGIDA ---
     suspend fun fetchArtists(): List<Artist> {
         return try {
             val session = getSession() ?: return emptyList()
@@ -85,7 +84,6 @@ class MusicRepository(
                 Log.e("MusicRepository", "Error en getAlbumList2 ($type): ${albumListResponse.code()}")
                 return emptyList()
             }
-
             val albums = albumListResponse.body()?.subsonicResponse?.albumList?.albumList ?: return emptyList()
             if (albums.isEmpty()) return emptyList()
 
@@ -141,68 +139,22 @@ class MusicRepository(
         return song.buildCoverArtUrl(session.baseUrl, session.user, session.token, session.salt)
     }
 
-    fun startSongDownload(song: Song) {
-        Log.d("MusicRepository", "Solicitando descarga para la canción: ${song.title}")
-        // TODO: Implementar lógica de descarga.
-    }
-
-    suspend fun searchSongs(query: String): List<Song> {
-        if (query.isBlank()) return emptyList()
-
-        return try {
-            val session = getSession() ?: return emptyList()
-            Log.d("MusicRepository", "Buscando canciones con la consulta: '$query'")
-            val response = apiService.search3(
-                user = session.user,
-                token = session.token,
-                salt = session.salt,
-                query = query
-            )
-
-            if (response.isSuccessful) {
-                val songs = response.body()?.subsonicResponse?.searchResult3?.songList ?: emptyList()
-                Log.d("MusicRepository", "Encontradas ${songs.size} canciones.")
-                // Construimos las URLs de las carátulas para que se muestren en los resultados
-                songs.forEach { song ->
-                    song.coverArtUrl = song.buildCoverArtUrl(session.baseUrl, session.user, session.token, session.salt)
-                }
-                songs
-            } else {
-                Log.e("MusicRepository", "Error al buscar canciones: ${response.code()}")
-                emptyList()
-            }
-        } catch (e: Exception) {
-            Log.e("MusicRepository", "Excepción al buscar canciones", e)
-            emptyList()
-        }
-    }
+    // --- SE ELIMINÓ searchSongs() PORQUE search() ES MEJOR Y LA REEMPLAZA ---
 
     suspend fun fetchAlbumList(type: String): List<Album> {
         return try {
             val session = getSession() ?: return emptyList()
-            val response = apiService.getAlbumList2(
-                user = session.user,
-                token = session.token,
-                salt = session.salt,
-                type = type, // "newest" o "recent"
-                size = 20
-            )
+            val response = apiService.getAlbumList2(session.user, session.token, session.salt, type, 20)
             if (response.isSuccessful) {
                 val albums = response.body()?.subsonicResponse?.albumList?.albumList ?: emptyList()
-                // Construimos la URL de la carátula para cada álbum
                 albums.forEach { album ->
                     album.coverArtUrl = album.buildCoverArtUrlForAlbum(session.baseUrl, session.user, session.token, session.salt)
                 }
                 albums
-            } else {
-                emptyList()
-            }
-        } catch (e: Exception) {
-            emptyList()
-        }
+            } else { emptyList() }
+        } catch (e: Exception) { emptyList() }
     }
 
-    // Y necesitamos una función para obtener los detalles de un solo álbum
     suspend fun fetchAlbumDetails(albumId: String): List<Song> {
         return try {
             val session = getSession() ?: return emptyList()
@@ -213,32 +165,40 @@ class MusicRepository(
                     song.coverArtUrl = song.buildCoverArtUrl(session.baseUrl, session.user, session.token, session.salt)
                 }
                 songs
-            } else {
-                emptyList()
-            }
-        } catch(e: Exception) {
-            emptyList()
-        }
+            } else { emptyList() }
+        } catch(e: Exception) { emptyList() }
     }
 
     suspend fun scrobbleSong(songId: String) {
-        // --- CORRECCIÓN AQUÍ ---
-        // Cambiamos getSessionData() por getSession()
         val session = getSession() ?: return
-        // --- FIN DE LA CORRECCIÓN ---
-
         try {
-            // Esta llamada ahora es válida
-            apiService.scrobble(
-                user = session.user,
-                token = session.token,
-                salt = session.salt,
-                id = songId
-            )
+            apiService.scrobble(session.user, session.token, session.salt, songId)
             Log.d("MusicRepository", "Scrobble exitoso para la canción ID: $songId")
         } catch (e: Exception) {
             Log.e("MusicRepository", "Falló el scrobble para la canción ID: $songId", e)
         }
     }
 
+    // --- VERSIÓN ÚNICA Y CORRECTA DE search() ---
+    suspend fun search(query: String): SearchResult3? {
+        if (query.isBlank()) return null
+        val session = getSession() ?: return null
+
+        return try {
+            val response = apiService.search3(session.user, session.token, session.salt, query)
+            if (response.isSuccessful) {
+                val result = response.body()?.subsonicResponse?.searchResult3
+                // Procesamos las URLs de las carátulas aquí mismo
+                result?.songList?.forEach { it.coverArtUrl = it.buildCoverArtUrl(session.baseUrl, session.user, session.token, session.salt) }
+                result?.albumList?.forEach { it.coverArtUrl = it.buildCoverArtUrlForAlbum(session.baseUrl, session.user, session.token, session.salt) }
+                result
+            } else {
+                Log.e("MusicRepository", "Error en la búsqueda: ${response.code()}")
+                null
+            }
+        } catch (e: Exception) {
+            Log.e("MusicRepository", "Excepción en la búsqueda", e)
+            null
+        }
+    }
 }

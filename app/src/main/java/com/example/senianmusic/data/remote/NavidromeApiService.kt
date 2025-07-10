@@ -83,10 +83,10 @@ interface NavidromeApiService {
         @Query("u") user: String,
         @Query("t") token: String,
         @Query("s") salt: String,
-        @Query("query") query: String, // El texto a buscar
-        @Query("songCount") songCount: Int = 50, // Máximo de canciones a devolver
-        @Query("albumCount") albumCount: Int = 0, // No buscamos álbumes por ahora
-        @Query("artistCount") artistCount: Int = 0, // No buscamos artistas por ahora
+        @Query("query") query: String,
+        @Query("songCount") songCount: Int = 20, // Pedimos un número razonable
+        @Query("albumCount") albumCount: Int = 10, // Pedimos álbumes
+        @Query("artistCount") artistCount: Int = 5, // y artistas
         @Query("v") version: String = "1.16.1",
         @Query("c") client: String = "SenianMusic",
         @Query("f") format: String = "json"
