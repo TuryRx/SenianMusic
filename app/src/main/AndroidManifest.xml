@@ -72,6 +72,14 @@
             android:name=".ui.SettingsActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".ui.artist.ArtistDetailActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.grid.GridActivity"
+            android:exported="false" />
+
         <!-- Tu servicio de reproducción -->
         <service
             android:name=".player.PlaybackService"

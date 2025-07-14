@@ -7,13 +7,15 @@ import com.example.senianmusic.data.local.dao.SongDao
 import com.example.senianmusic.data.remote.NavidromeApiService
 import com.example.senianmusic.data.remote.model.Album
 import com.example.senianmusic.data.remote.model.Artist
-import com.example.senianmusic.data.remote.model.SearchResult3 // Asegúrate de que esta importación esté
+import com.example.senianmusic.data.remote.model.SearchResult3
 import com.example.senianmusic.data.remote.model.Song
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
+import com.example.senianmusic.data.remote.model.ArtistWithAlbums
+
 
 class MusicRepository(
     val context: Context,
@@ -21,7 +23,59 @@ class MusicRepository(
     val settingsRepository: SettingsRepository,
     private val apiService: NavidromeApiService
 ) {
+    private val TAG = "ArtistDebug"
 
+    // ... (El resto de tus funciones como getSession, fetchArtists, etc. se quedan igual) ...
+
+    suspend fun fetchArtistDetails(artistId: String): ArtistWithAlbums? {
+        val session = getSession() ?: return null
+        Log.d(TAG, "Repo: Fetching details for artist ID: $artistId")
+        return try {
+            val response = apiService.getArtist(session.user, session.token, session.salt, artistId)
+            if (response.isSuccessful) {
+                val artistDetails = response.body()?.subsonicResponse?.artist
+                Log.d(TAG, "Repo: fetchArtistDetails success. Artist: ${artistDetails?.name}, Album count: ${artistDetails?.albumList?.size}")
+                artistDetails?.albumList?.forEach { album ->
+                    album.coverArtUrl = album.buildCoverArtUrlForAlbum(session.baseUrl, session.user, session.token, session.salt)
+                }
+                artistDetails
+            } else {
+                Log.e(TAG, "Repo: Error fetching artist details: ${response.code()} - ${response.message()}")
+                null
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Repo: Exception fetching artist details", e)
+            null
+        }
+    }
+
+    suspend fun fetchAllSongsByArtist(artistId: String): List<Song> {
+        val session = getSession() ?: return emptyList()
+        Log.d(TAG, "Repo: Fetching ALL songs for artist ID: $artistId")
+
+        val artistDetails = fetchArtistDetails(artistId)
+        val albums = artistDetails?.albumList
+        if (albums.isNullOrEmpty()) {
+            Log.w(TAG, "Repo: No albums found for artist $artistId. Cannot fetch songs.")
+            return emptyList()
+        }
+
+        Log.d(TAG, "Repo: Found ${albums.size} albums for artist. Fetching songs from each...")
+
+        return withContext(Dispatchers.IO) {
+            val songJobs = albums.map { album ->
+                async {
+                    fetchAlbumDetails(album.id)
+                }
+            }
+            val allSongs = songJobs.awaitAll().flatten().distinctBy { it.id }
+            Log.d(TAG, "Repo: fetchAllSongsByArtist finished. Total unique songs: ${allSongs.size}")
+            allSongs
+        }
+    }
+
+    // ... El resto de tus funciones: fetchAlbumDetails, search, etc...
+    // Mantenlas como estaban, no es necesario modificarlas.
     private data class SessionData(val baseUrl: String, val user: String, val token: String, val salt: String)
 
     private suspend fun getSession(): SessionData? {
@@ -139,8 +193,6 @@ class MusicRepository(
         return song.buildCoverArtUrl(session.baseUrl, session.user, session.token, session.salt)
     }
 
-    // --- SE ELIMINÓ searchSongs() PORQUE search() ES MEJOR Y LA REEMPLAZA ---
-
     suspend fun fetchAlbumList(type: String): List<Album> {
         return try {
             val session = getSession() ?: return emptyList()
@@ -179,7 +231,6 @@ class MusicRepository(
         }
     }
 
-    // --- VERSIÓN ÚNICA Y CORRECTA DE search() ---
     suspend fun search(query: String): SearchResult3? {
         if (query.isBlank()) return null
         val session = getSession() ?: return null
@@ -188,7 +239,6 @@ class MusicRepository(
             val response = apiService.search3(session.user, session.token, session.salt, query)
             if (response.isSuccessful) {
                 val result = response.body()?.subsonicResponse?.searchResult3
-                // Procesamos las URLs de las carátulas aquí mismo
                 result?.songList?.forEach { it.coverArtUrl = it.buildCoverArtUrl(session.baseUrl, session.user, session.token, session.salt) }
                 result?.albumList?.forEach { it.coverArtUrl = it.buildCoverArtUrlForAlbum(session.baseUrl, session.user, session.token, session.salt) }
                 result

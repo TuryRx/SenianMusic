@@ -17,18 +17,10 @@ class AlbumDetailViewModel(private val repository: MusicRepository) : ViewModel(
         viewModelScope.launch {
             val albumSongs = repository.fetchAlbumDetails(albumId)
 
-            // --- ¡AQUÍ ESTÁ LA LÓGICA CLAVE! ---
-            // Usamos .distinct() para eliminar cualquier canción que esté duplicada en la lista.
-            // Kotlin usará el método `equals` de la data class `Song` para comparar.
-            // Si dos objetos Song tienen exactamente las mismas propiedades, se considerará un duplicado.
-            val uniqueSongs = albumSongs.distinct()
+            // Filtra duplicados por nombre de canción
+            val uniqueSongs = albumSongs.distinctBy { it.title.lowercase() }
 
             _songs.value = uniqueSongs
         }
-    }
-
-    // El resto de las funciones no necesitan cambios
-    suspend fun getStreamUrlForSong(song: Song): String? {
-        return repository.getStreamUrlForSong(song)
     }
 }

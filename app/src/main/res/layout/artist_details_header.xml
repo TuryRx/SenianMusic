@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Usamos ConstraintLayout para posicionar fácilmente el separador al fondo -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="56dp"
+    android:paddingEnd="56dp"
+    android:paddingTop="32dp">
+
+    <ImageView
+        android:id="@+id/artist_detail_image"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/movie" />
+
+    <TextView
+        android:id="@+id/artist_detail_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:maxLines="3"
+        android:textAppearance="@style/TextAppearance.Leanback.Header"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="@+id/artist_detail_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/artist_detail_image"
+        app:layout_constraintTop_toTopOf="@+id/artist_detail_image"
+        tools:text="Nombre del Artista de Prueba" />
+
+    <View
+        android:id="@+id/header_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        android:alpha="0.3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

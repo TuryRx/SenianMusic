@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <FrameLayout
+        android:id="@+id/artist_details_container"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_alignParentTop="true"
+        android:background="?android:attr/colorBackground"
+        android:elevation="8dp"/> 
+
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/artist_rows_container"
+        android:name="com.example.senianmusic.ui.artist.ArtistDetailFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/artist_details_container"
+        android:layout_marginTop="-128dp" />
+
+</RelativeLayout>

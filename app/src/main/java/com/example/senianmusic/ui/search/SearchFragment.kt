@@ -3,9 +3,6 @@ package com.example.senianmusic.ui.search
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
-import android.util.Log
-import android.view.View
-import android.widget.Toast // <-- ¡IMPORTACIÓN AÑADIDA!
 import androidx.fragment.app.viewModels
 import androidx.leanback.app.SearchSupportFragment
 import androidx.leanback.widget.*
@@ -15,11 +12,10 @@ import com.example.senianmusic.data.remote.model.Artist
 import com.example.senianmusic.data.remote.model.SearchResult3
 import com.example.senianmusic.data.remote.model.Song
 import com.example.senianmusic.ui.album.AlbumDetailActivity
+import com.example.senianmusic.ui.artist.ArtistDetailActivity
 import com.example.senianmusic.ui.playback.PlaybackActivity
 import com.example.senianmusic.ui.presenter.ArtistCardPresenter
 import com.example.senianmusic.ui.presenter.UniversalCardPresenter
-import com.example.senianmusic.ui.search.SearchViewModel
-import com.example.senianmusic.ui.search.SearchViewModelFactory
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -37,7 +33,7 @@ class SearchFragment : SearchSupportFragment(), SearchSupportFragment.SearchResu
         setSearchResultProvider(this)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: android.view.View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rowsAdapter = ArrayObjectAdapter(ListRowPresenter())
         setupEventListeners()
@@ -125,7 +121,13 @@ class SearchFragment : SearchSupportFragment(), SearchSupportFragment.SearchResu
                     startActivity(intent)
                 }
                 is Artist -> {
-                    Toast.makeText(context, "Navegando al artista: ${item.name}", Toast.LENGTH_SHORT).show()
+                    // --- ¡AQUÍ ESTÁ EL CAMBIO! ---
+                    // Navegamos a la nueva pantalla de detalle del artista.
+                    val intent = Intent(requireActivity(), ArtistDetailActivity::class.java).apply {
+                        putExtra(ArtistDetailActivity.ARTIST_ID, item.id)
+                        putExtra(ArtistDetailActivity.ARTIST_NAME, item.name)
+                    }
+                    startActivity(intent)
                 }
             }
         }

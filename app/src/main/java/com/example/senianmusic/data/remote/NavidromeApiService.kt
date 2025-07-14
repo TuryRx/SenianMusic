@@ -4,6 +4,7 @@ import com.example.senianmusic.data.remote.model.AlbumList2Response // ¡NUEVO!
 import com.example.senianmusic.data.remote.model.TopSongsResponse   // ¡NUEVO!
 import com.example.senianmusic.data.remote.model.AlbumResponse
 import com.example.senianmusic.data.remote.model.SubsonicResponse
+import com.example.senianmusic.data.remote.model.ArtistDetailResponse
 
 // Importa los nuevos modelos de respuesta
 import com.example.senianmusic.data.remote.model.ArtistsResponse
@@ -114,5 +115,17 @@ interface NavidromeApiService {
         @Query("c") client: String = "SenianMusic",
         @Query("f") format: String = "json"
     ): Response<SubsonicResponse> // Usa tu clase de respuesta base.
+
+    // --- ¡AÑADE ESTE NUEVO ENDPOINT! ---
+    @GET("rest/getArtist.view")
+    suspend fun getArtist(
+        @Query("u") user: String,
+        @Query("t") token: String,
+        @Query("s") salt: String,
+        @Query("id") id: String, // El ID del artista que queremos
+        @Query("v") version: String = "1.16.1",
+        @Query("c") client: String = "SenianMusic",
+        @Query("f") format: String = "json"
+    ): Response<ArtistDetailResponse>
 
 }

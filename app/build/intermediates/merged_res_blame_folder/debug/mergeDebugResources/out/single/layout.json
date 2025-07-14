@@ -1,46 +1,98 @@
 [
     {
-        "merged": "com.example.senianmusic.app-mergeDebugResources-50:/layout/activity_playback.xml",
-        "source": "com.example.senianmusic.app-main-53:/layout/activity_playback.xml"
+        "merged": "com.example.senianmusic.app-mergeDebugResources-50:/layout/activity_grid.xml",
+        "source": "com.example.senianmusic.app-main-53:/layout/activity_grid.xml"
     },
     {
-        "merged": "com.example.senianmusic.app-mergeDebugResources-50:/layout/custom_browse_title_view.xml",
-        "source": "com.example.senianmusic.app-main-53:/layout/custom_browse_title_view.xml"
+        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-mergeDebugResources-50:/layout/fragment_rows_list.xml",
+        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/layout/fragment_rows_list.xml"
     },
     {
-        "merged": "com.example.senianmusic.app-mergeDebugResources-50:/layout/activity_login.xml",
-        "source": "com.example.senianmusic.app-main-53:/layout/activity_login.xml"
+        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-mergeDebugResources-50:/layout/artist_header_card.xml",
+        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/layout/artist_header_card.xml"
     },
     {
-        "merged": "com.example.senianmusic.app-mergeDebugResources-50:/layout/activity_details.xml",
-        "source": "com.example.senianmusic.app-main-53:/layout/activity_details.xml"
+        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-mergeDebugResources-50:/layout/layout_artist_header_panel.xml",
+        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/layout/layout_artist_header_panel.xml"
     },
     {
-        "merged": "com.example.senianmusic.app-mergeDebugResources-50:/layout/activity_settings.xml",
-        "source": "com.example.senianmusic.app-main-53:/layout/activity_settings.xml"
+        "merged": "com.example.senianmusic.app-mergeDebugResources-50:/layout/artist_details_header.xml",
+        "source": "com.example.senianmusic.app-main-53:/layout/artist_details_header.xml"
     },
     {
-        "merged": "com.example.senianmusic.app-mergeDebugResources-50:/layout/playing_indicator.xml",
-        "source": "com.example.senianmusic.app-main-53:/layout/playing_indicator.xml"
+        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-mergeDebugResources-50:/layout/custom_browse_title_view.xml",
+        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/layout/custom_browse_title_view.xml"
     },
     {
-        "merged": "com.example.senianmusic.app-mergeDebugResources-50:/layout/activity_search.xml",
-        "source": "com.example.senianmusic.app-main-53:/layout/activity_search.xml"
+        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-mergeDebugResources-50:/layout/item_card_view.xml",
+        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/layout/item_card_view.xml"
     },
     {
-        "merged": "com.example.senianmusic.app-mergeDebugResources-50:/layout/activity_album_detail.xml",
-        "source": "com.example.senianmusic.app-main-53:/layout/activity_album_detail.xml"
+        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-mergeDebugResources-50:/layout/now_playing_card.xml",
+        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/layout/now_playing_card.xml"
     },
     {
-        "merged": "com.example.senianmusic.app-mergeDebugResources-50:/layout/activity_main.xml",
-        "source": "com.example.senianmusic.app-main-53:/layout/activity_main.xml"
+        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-mergeDebugResources-50:/layout/activity_search.xml",
+        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/layout/activity_search.xml"
     },
     {
-        "merged": "com.example.senianmusic.app-mergeDebugResources-50:/layout/now_playing_card.xml",
-        "source": "com.example.senianmusic.app-main-53:/layout/now_playing_card.xml"
+        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-mergeDebugResources-50:/layout/activity_album_detail.xml",
+        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/layout/activity_album_detail.xml"
     },
     {
-        "merged": "com.example.senianmusic.app-mergeDebugResources-50:/layout/activity_setup.xml",
-        "source": "com.example.senianmusic.app-main-53:/layout/activity_setup.xml"
+        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-mergeDebugResources-50:/layout/fragment_artist_rows_recyclerview.xml",
+        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/layout/fragment_artist_rows_recyclerview.xml"
+    },
+    {
+        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-mergeDebugResources-50:/layout/layout_artist_rows_fragment.xml",
+        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/layout/layout_artist_rows_fragment.xml"
+    },
+    {
+        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-mergeDebugResources-50:/layout/activity_details.xml",
+        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/layout/activity_details.xml"
+    },
+    {
+        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-mergeDebugResources-50:/layout/action_view_more_card.xml",
+        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/layout/action_view_more_card.xml"
+    },
+    {
+        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-mergeDebugResources-50:/layout/activity_artist_detail.xml",
+        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/layout/activity_artist_detail.xml"
+    },
+    {
+        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-mergeDebugResources-50:/layout/playing_indicator.xml",
+        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/layout/playing_indicator.xml"
+    },
+    {
+        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-mergeDebugResources-50:/layout/activity_playback.xml",
+        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/layout/activity_playback.xml"
+    },
+    {
+        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-mergeDebugResources-50:/layout/activity_login.xml",
+        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/layout/activity_login.xml"
+    },
+    {
+        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-mergeDebugResources-50:/layout/activity_main.xml",
+        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/layout/activity_main.xml"
+    },
+    {
+        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-mergeDebugResources-50:/layout/activity_settings.xml",
+        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/layout/activity_settings.xml"
+    },
+    {
+        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-mergeDebugResources-50:/layout/activity_setup.xml",
+        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/layout/activity_setup.xml"
+    },
+    {
+        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-mergeDebugResources-50:/layout/artist_details_header.xml",
+        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/layout/artist_details_header.xml"
+    },
+    {
+        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-mergeDebugResources-50:/layout/item_artist_row.xml",
+        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/layout/item_artist_row.xml"
+    },
+    {
+        "merged": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-mergeDebugResources-50:/layout/fragment_artist_rows.xml",
+        "source": "/home/roxas/.gradle/daemon/8.13/com.example.senianmusic.app-main-53:/layout/fragment_artist_rows.xml"
     }
 ]
